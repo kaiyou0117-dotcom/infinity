@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>株式会社インフィニティブレイブ｜公式サイト</title>
+<meta name="description" content="株式会社インフィニティブレイブ　公式サイト。見えざる脅威『エネミー』からこの街の平穏を守る、異能人材の専門集団です。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --bg-panel: #F6F6F6;
+    --bg-panel-alt: #EFEFEF;
+    --line: rgba(0,0,0,0.10);
+    --line-strong: rgba(0,0,0,0.24);
+    --text: #111111;
+    --text-muted: #4A4A4A;
+    --text-faint: #8A8A8A;
+
+    --ink: #111111;
+    --blue: #142352;
+    --blue-deep: #0A1531;
+    --blue-tint: rgba(20,35,82,0.06);
+
+    --gold: #B4872C;
+    --gold-bright: #D9A93F;
+
+    --steel: #9BA4B5;
+    --bronze: #B97A46;
+    --silver: #C7CCD6;
+    --platinum: #E7E2D6;
+
+    --font-display: 'Shippori Mincho', 'Noto Sans JP', serif;
+    --font-body: 'Noto Sans JP', sans-serif;
+    --font-data: 'Space Grotesk', 'Zen Kaku Gothic New', sans-serif;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      var(--bg)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg stroke='%23000000' stroke-opacity='0.07' stroke-width='1'%3E%3Cline x1='24' y1='19' x2='24' y2='29'/%3E%3Cline x1='19' y1='24' x2='29' y2='24'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 48px 48px;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img{ max-width:100%; display:block; }
+  ul{ margin:0; padding:0; list-style:none; }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:720px){ .wrap{ padding:0 20px; } }
+
+  h1,h2,h3,h4{ font-family: var(--font-display); font-weight:700; margin:0; letter-spacing:0.02em; }
+
+  .eyebrow{
+    font-family: var(--font-data);
+    font-size:12.5px;
+    letter-spacing:0.22em;
+    color: var(--ink);
+    text-transform:uppercase;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:26px; height:1px;
+    background: var(--ink);
+    display:inline-block;
+  }
+
+  /* ===== Header ===== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background: var(--blue);
+    border-bottom:1px solid var(--blue-deep);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between;
+    height:72px;
+  }
+  .brand{
+    font-family: var(--font-display);
+    font-weight:900;
+    font-size:18px;
+    letter-spacing:0.04em;
+    display:flex; align-items:center; gap:10px;
+    color:#FFFFFF;
+  }
+  .brand .mark{
+    width:30px; height:30px;
+    background:#FFFFFF;
+    display:flex; align-items:center; justify-content:center;
+    flex:none;
+  }
+  .brand .mark img{ width:16px; height:auto; display:block; }
+  .brand small{
+    display:block;
+    font-family: var(--font-data);
+    font-weight:500;
+    font-size:10px;
+    letter-spacing:0.18em;
+    color: rgba(255,255,255,0.62);
+    margin-top:2px;
+  }
+  nav.links{ display:flex; gap:36px; }
+  nav.links a{
+    font-size:14.5px;
+    color: rgba(255,255,255,0.78);
+    position:relative;
+    padding:4px 0;
+    transition: color 0.2s ease;
+  }
+  nav.links a:hover, nav.links a:focus-visible{ color: #FFFFFF; }
+  nav.links a:focus-visible{ outline:2px solid #FFFFFF; outline-offset:4px; border-radius:0; }
+  .nav-cta{
+    font-family: var(--font-data);
+    font-size:13px;
+    letter-spacing:0.05em;
+    border:1px solid rgba(255,255,255,0.55);
+    color:#FFFFFF;
+    padding:9px 18px;
+    border-radius:0;
+    transition: border-color 0.2s ease, background 0.2s ease, color .2s ease;
+  }
+  .nav-cta:hover, .nav-cta:focus-visible{ border-color:#FFFFFF; background: #FFFFFF; color:var(--blue-deep); }
+  .menu-btn{ display:none; }
+
+  @media (max-width:860px){
+    nav.links{ display:none; }
+    .menu-btn{
+      display:block; background:none; border:1px solid rgba(255,255,255,0.55);
+      color:#FFFFFF; padding:8px 12px; font-family:var(--font-data); font-size:12px; border-radius:0;
+    }
+  }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    padding:172px 0 120px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero::before{
+    content:"";
+    position:absolute; inset:0;
+    background-image: linear-gradient(90deg, rgba(0,0,0,0.045) 1px, transparent 1px);
+    background-size: 96px 100%;
+    mask-image: linear-gradient(to bottom, black, transparent 92%);
+    pointer-events:none;
+  }
+  .hero-grid{
+    position:relative;
+    display:grid;
+    grid-template-columns: 1.15fr 0.85fr;
+    gap:60px;
+    align-items:end;
+  }
+  @media (max-width:920px){ .hero-grid{ grid-template-columns:1fr; } }
+
+  .hero-side{ display:flex; flex-direction:column; align-items:flex-end; }
+  .hero-fist{
+    width:150px;
+    height:auto;
+    margin-bottom:34px;
+    filter: drop-shadow(0 18px 30px rgba(0,0,0,0.14));
+  }
+  @media (max-width:920px){
+    .hero-side{ align-items:flex-start; }
+    .hero-fist{ width:96px; margin-bottom:24px; }
+  }
+
+  .hero h1{
+    font-size: clamp(30px, 6.4vw, 68px);
+    line-height:1.16;
+    font-weight:900;
+    white-space: nowrap;
+  }
+  @media (max-width:480px){
+    .hero h1{ font-size: clamp(24px, 8.2vw, 40px); }
+  }
+  .hero h1 em{
+    font-style:normal;
+    color: var(--ink);
+  }
+  .hero p.lead{
+    margin-top:26px;
+    font-size:17px;
+    color: var(--text-muted);
+    max-width:46ch;
+  }
+  .hero-actions{ margin-top:38px; display:flex; gap:16px; flex-wrap:wrap; }
+  .btn{
+    font-family: var(--font-data);
+    font-size:13.5px;
+    letter-spacing:0.04em;
+    padding:14px 26px;
+    border-radius:0;
+    display:inline-flex; align-items:center; gap:10px;
+    transition: transform 0.2s ease, background 0.2s ease, border-color .2s ease;
+  }
+  .btn-primary{ background: var(--ink); color:#FFFFFF; font-weight:600; }
+  .btn-primary:hover, .btn-primary:focus-visible{ transform:translateY(-1px); }
+  .btn-ghost{ border:1px solid var(--line-strong); color:var(--text); }
+  .btn-ghost:hover, .btn-ghost:focus-visible{ border-color:var(--ink); color:var(--ink); }
+  .btn:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
+
+  /* rank ladder – signature element */
+  .rank-tower{
+    display:flex; flex-direction:column;
+    border-top:1px solid var(--ink);
+    width:100%;
+  }
+  .rank-row{
+    display:grid;
+    grid-template-columns: 30px 1fr auto;
+    align-items:center;
+    gap:14px;
+    padding:14px 4px;
+    border-bottom:1px solid var(--line);
+    opacity:0; transform: translateY(8px);
+    animation: rankIn 0.5s ease forwards;
+  }
+  .rank-row:nth-child(1){ animation-delay:0.05s; }
+  .rank-row:nth-child(2){ animation-delay:0.12s; }
+  .rank-row:nth-child(3){ animation-delay:0.19s; }
+  .rank-row:nth-child(4){ animation-delay:0.26s; }
+  .rank-row:nth-child(5){ animation-delay:0.33s; }
+  @keyframes rankIn{ to{ opacity:1; transform:translateY(0); } }
+  .rank-chip{ width:16px; height:16px; border-radius:50%; }
+  .rank-name{ font-family: var(--font-data); font-size:13.5px; letter-spacing:0.03em; }
+  .rank-name span{ display:block; font-family:var(--font-body); font-size:11px; color:var(--text-faint); margin-top:1px; }
+  .rank-tag{ font-family: var(--font-data); font-size:11px; color: var(--text-faint); }
+
+  .stat-strip{
+    margin-top:60px;
+    padding-top:36px;
+    border-top:1px solid var(--line);
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:24px;
+  }
+  @media (max-width:720px){ .stat-strip{ grid-template-columns: repeat(2,1fr); } }
+  .stat-num{ font-family: var(--font-data); font-size:32px; font-weight:700; color:var(--text); }
+  .stat-num sup{ font-size:14px; color:var(--text-faint); margin-left:2px; }
+  .stat-label{ margin-top:6px; font-size:12.5px; color:var(--text-muted); letter-spacing:0.02em; }
+
+  /* ===== Section shared ===== */
+  section{ padding:120px 0; border-bottom:1px solid var(--line); }
+  .sec-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:56px; flex-wrap:wrap; }
+  .sec-head h2{ font-size: clamp(28px,3.4vw,40px); max-width:16ch; }
+  .sec-head p{ color:var(--text-muted); max-width:38ch; font-size:15px; }
+
+  /* about */
+  .about-grid{ display:grid; grid-template-columns: 0.9fr 1.1fr; gap:70px; }
+  @media (max-width:860px){ .about-grid{ grid-template-columns:1fr; gap:40px; } }
+  .about-grid blockquote{
+    margin:0; font-family:var(--font-display); font-weight:700;
+    font-size:22px; line-height:1.6; color:var(--text);
+    border-left:2px solid var(--ink); padding-left:24px;
+  }
+  .about-copy p{ color:var(--text-muted); font-size:15.5px; margin:0 0 18px; }
+  .about-copy p:last-child{ margin-bottom:0; }
+
+  /* departments */
+  .dept-list{ display:grid; grid-template-columns: repeat(4, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:920px){ .dept-list{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width:560px){ .dept-list{ grid-template-columns: 1fr; } }
+  .dept-card{ background:var(--bg-panel); padding:32px 26px; min-height:230px; display:flex; flex-direction:column; }
+  .dept-code{ font-family:var(--font-data); font-size:12px; color:var(--ink); letter-spacing:0.1em; }
+  .dept-card h3{ font-size:19px; margin-top:14px; }
+  .dept-card p{ margin-top:12px; font-size:13.5px; color:var(--text-muted); flex:1; }
+  .dept-note{ margin-top:16px; font-size:11.5px; color:var(--text-faint); font-family:var(--font-data); }
+
+  .division-strip{ margin-top:1px; display:grid; grid-template-columns: repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-top:none; }
+  @media (max-width:720px){ .division-strip{ grid-template-columns: 1fr; } }
+  .division-strip div{ background: var(--bg-panel-alt); padding:22px 26px; }
+  .division-strip h4{ font-size:14.5px; font-family:var(--font-body); font-weight:700; }
+  .division-strip p{ font-size:13px; color:var(--text-muted); margin:8px 0 0; }
+
+  /* equipment */
+  .eq-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:2px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:760px){ .eq-grid{ grid-template-columns:1fr; } }
+  .eq-card{ background:var(--bg-panel); padding:36px; }
+  .eq-card h3{ font-size:20px; display:flex; align-items:baseline; gap:10px; }
+  .eq-card h3 .en{ font-family:var(--font-data); font-size:12px; color:var(--text-faint); letter-spacing:0.08em; }
+  .eq-card p{ margin-top:14px; color:var(--text-muted); font-size:14px; }
+
+  /* career / ranks */
+  .rank-detail{ display:grid; grid-template-columns: repeat(5, 1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  @media (max-width:920px){ .rank-detail{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width:560px){ .rank-detail{ grid-template-columns: 1fr; } }
+  .rank-detail article{ background:var(--bg-panel); padding:28px 22px; min-height:210px; }
+  .rank-detail .chip{ width:22px; height:22px; border-radius:50%; }
+  .rank-detail article:last-child .chip{ box-shadow: 0 0 0 3px rgba(0,0,0,0.18); }
+  .rank-detail h4{ font-family:var(--font-data); font-size:15px; letter-spacing:0.04em; margin-top:16px; }
+  .rank-detail p{ margin-top:10px; font-size:12.5px; color:var(--text-muted); line-height:1.7; }
+
+  /* news */
+  .news-list{ border-top:1px solid var(--line); }
+  .news-item{
+    display:grid; grid-template-columns: 130px 90px 1fr;
+    gap:24px; padding:26px 0; border-bottom:1px solid var(--line);
+    align-items:baseline;
+  }
+  @media (max-width:640px){ .news-item{ grid-template-columns: 1fr; gap:6px; } }
+  .news-date{ font-family:var(--font-data); font-size:13px; color:var(--text-faint); }
+  .news-tag{ font-family:var(--font-data); font-size:11px; letter-spacing:0.06em; color:var(--ink); align-self:start; }
+  .news-item h4{ font-family:var(--font-body); font-weight:700; font-size:15.5px; }
+  .news-item.flag .news-tag{ text-decoration: underline; text-underline-offset:3px; }
+
+  /* contact / footer */
+  .contact-band{
+    position:relative;
+    text-align:center; padding:110px 0 90px;
+    overflow:hidden;
+  }
+  .contact-rings{
+    position:absolute;
+    left:50%; top:50%;
+    width:460px;
+    transform: translate(-50%,-50%);
+    opacity:0.05;
+    pointer-events:none;
+  }
+  .contact-band > *{ position:relative; }
+  .contact-band h2{ font-size: clamp(26px,3.6vw,38px); max-width:20ch; margin:0 auto; }
+  .contact-band .btn{ margin-top:34px; }
+
+  footer{ padding:48px 0; }
+  .foot-grid{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  .foot-grid .brand{ font-size:15px; color:var(--ink); }
+  .foot-grid .brand .mark{ background:transparent; width:22px; height:22px; }
+  .foot-grid .brand .mark img{ width:20px; }
+  .foot-links{ display:flex; gap:26px; }
+  .foot-links a{ font-size:13px; color:var(--text-muted); }
+  .foot-links a:hover{ color:var(--ink); }
+  .foot-copy{ margin-top:28px; font-size:12px; color:var(--text-faint); font-family:var(--font-data); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="#top" class="brand">
+      <span class="mark" aria-hidden="true"><img src="assets/fist-mark.png" alt="拳のシンボルマーク"></span>
+      <span>インフィニティブレイブ<small>INFINITY BRAVE CO., LTD.</small></span>
+    </a>
+    <nav class="links">
+      <a href="#about">会社概要</a>
+      <a href="#business">事業内容</a>
+      <a href="#equipment">装備・技術</a>
+      <a href="#career">採用情報</a>
+      <a href="#news">お知らせ</a>
+    </nav>
+    <a href="#contact" class="nav-cta">お問い合わせ</a>
+    <button class="menu-btn" aria-label="メニューを開く">MENU</button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" style="border-top:none; padding-top:172px;">
+    <div class="wrap hero-grid">
+      <div>
+        <h1><em>インフィニティブレイブ</em></h1>
+        <p class="lead">株式会社インフィニティブレイブは、「エネミー」と呼ばれる異形の脅威からこの街の日常を守る、異能人材の専門集団です。戦闘部・技術部・経営部が連携し、依頼の受注から現場対応、事後処理までを一貫して担います。</p>
+        <div class="hero-actions">
+          <a href="#career" class="btn btn-primary">採用情報を見る</a>
+          <a href="#business" class="btn btn-ghost">事業内容を見る</a>
+        </div>
+
+        <div class="stat-strip">
+          <div>
+            <div class="stat-num">4<sup>部隊</sup></div>
+            <div class="stat-label">突撃・遊撃・射撃・隠密</div>
+          </div>
+          <div>
+            <div class="stat-num">3<sup>部署</sup></div>
+            <div class="stat-label">戦闘部・技術部・経営部</div>
+          </div>
+          <div>
+            <div class="stat-num">5<sup>階級</sup></div>
+            <div class="stat-label">スチール〜プラチナ</div>
+          </div>
+          <div>
+            <div class="stat-num">30<sup>名+</sup></div>
+            <div class="stat-label">現役所属社員数</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-side">
+        <img class="hero-fist" src="assets/fist-mark.png" alt="拳のシンボルマーク">
+        <div class="rank-tower" role="img" aria-label="ランク制度：スチールからプラチナまでの5階級">
+        <div class="rank-row"><span class="rank-chip" style="background:linear-gradient(135deg,var(--gold-bright),var(--gold))"></span><span class="rank-name">PLATINUM<span>最高ランク｜天才の証</span></span><span class="rank-tag">05</span></div>
+        <div class="rank-row"><span class="rank-chip" style="background:linear-gradient(135deg,#F4D06F,#C98A2E)"></span><span class="rank-name">GOLD<span>準最高ランク</span></span><span class="rank-tag">04</span></div>
+        <div class="rank-row"><span class="rank-chip" style="background:var(--silver)"></span><span class="rank-name">SILVER<span>中間ランク</span></span><span class="rank-tag">03</span></div>
+        <div class="rank-row"><span class="rank-chip" style="background:var(--bronze)"></span><span class="rank-name">BRONZE<span>次点ランク</span></span><span class="rank-tag">02</span></div>
+        <div class="rank-row"><span class="rank-chip" style="background:var(--steel)"></span><span class="rank-name">STEEL<span>初期ランク</span></span><span class="rank-tag">01</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ABOUT ===== -->
+  <section id="about">
+    <div class="wrap about-grid">
+      <div>
+        <div class="eyebrow">ABOUT US</div>
+        <blockquote>「戦う理由」よりも先に、<br>「守れる腕」を評価する会社です。</blockquote>
+      </div>
+      <div class="about-copy">
+        <p>株式会社インフィニティブレイブは、異能を持つ人材が前線でエネミーと対峙し、市民の平穏な暮らしを守ることを目的として設立されました。社名は代表（仮面の社長S）の発案によるもので、「限りない勇気（Infinity Brave）」を体現する存在でありたいという想いが込められています。</p>
+        <p>組織は大きく戦闘部・技術部・経営部の3部署に分かれ、戦闘部はさらに突撃・遊撃・射撃・隠密の4部隊で構成されます。部署・部隊は最大2つまで兼任が可能で、社員一人ひとりの異能や適性に応じた柔軟な配置を行っています。</p>
+        <p>評価は年功序列と実力を組み合わせた役職制度、および在籍期間と討伐実績に基づく完全実力主義のランク制度の二軸で運用。経歴やバックグラウンドを問わず、現場で結果を出せる人材を正当に評価する体制を整えています。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BUSINESS / DEPARTMENTS ===== -->
+  <section id="business">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">BUSINESS</div>
+          <h2>事業内容 — 3部署 4部隊</h2>
+        </div>
+        <p>依頼の受注から現場鎮圧、機材整備、社の運営に至るまで、部署をまたいだ連携で一件ずつ対応しています。</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="dept-list">
+        <div class="dept-card">
+          <div class="dept-code">DIV. 01 — 突撃部隊</div>
+          <h3>突撃</h3>
+          <p>単独で強敵と対峙し、難易度の高い依頼を請け負う部隊。一人で十分に渡り合える異能・体力を持つ人材が集まります。</p>
+          <div class="dept-note">戦闘部 / 単独運用</div>
+        </div>
+        <div class="dept-card">
+          <div class="dept-code">DIV. 02 — 遊撃部隊</div>
+          <h3>遊撃</h3>
+          <p>現場の状況に応じて柔軟に動く、近〜中距離戦闘が主体の部隊。所属社員数が最も多く、部の中核を担います。</p>
+          <div class="dept-note">戦闘部 / 最大人員</div>
+        </div>
+        <div class="dept-card">
+          <div class="dept-code">DIV. 03 — 射撃部隊</div>
+          <h3>射撃</h3>
+          <p>遠距離から攻撃し、近距離部隊を後方支援。遠距離向けの異能や重火器を扱える人材が中心となります。</p>
+          <div class="dept-note">戦闘部 / 後方支援</div>
+        </div>
+        <div class="dept-card">
+          <div class="dept-code">DIV. 04 — 隠密部隊</div>
+          <h3>隠密</h3>
+          <p>敵組織への潜入や掩護射撃を担当。隠れる・欺くことに長けた異能、あるいは高い演技力を持つ人材が集まります。</p>
+          <div class="dept-note">戦闘部 / 潜入・支援</div>
+        </div>
+      </div>
+      <div class="division-strip">
+        <div>
+          <div class="dept-code">TECHNOLOGY</div>
+          <h4>技術部</h4>
+          <p>戦闘部への武器供給・メンテナンス、社内セキュリティ管理、機械型エネミーの討伐対応を担当。</p>
+        </div>
+        <div>
+          <div class="dept-code">MANAGEMENT</div>
+          <h4>経営部</h4>
+          <p>会社全体の運営を担う部署。事務・総務まわりの業務を通じて現場を支えます。</p>
+        </div>
+        <div>
+          <div class="dept-code">TITLES</div>
+          <h4>役職について</h4>
+          <p>年功序列と実力を両輪とする役職制度。部長・副部長・隊長・副隊長の各役職が現場と経営の橋渡しを行います。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== EQUIPMENT ===== -->
+  <section id="equipment">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">EQUIPMENT & TECHNOLOGY</div>
+          <h2>保有兵器・異産</h2>
+        </div>
+        <p>技術部が開発・管理する装備群。社員の異能を最大限に引き出すための機材を独自に整備しています。</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="eq-grid">
+        <div class="eq-card">
+          <h3>TYPEシリーズ <span class="en">STANDARD GEAR</span></h3>
+          <p>変才の金緑石「霊石」を利用した社員向け一般装備。棒型・銃型・拳型・靴型・服型・帽子型・小物型の全6種があり、所持者ごとに二桁のTYPE番号が割り振られます。最大の特徴は形状・色・機能が持ち主に応じて最適化される点です。</p>
+        </div>
+        <div class="eq-card">
+          <h3>AEF「UNISON」<span class="en">MOBILE UNIT</span></h3>
+          <p>破損した傭兵組織のAEF「SB・C1」をJ.NECから引き取り改修した機体。脚部・操縦席には同社の「不知火」由来のパーツを使用し、本体性能が大きく向上しています。</p>
+        </div>
+        <div class="eq-card">
+          <h3>超越規格 <span class="en">OVER WEAPON</span></h3>
+          <p>過去の決戦でオーバーパワーが永続付与され異産化した武器群。無から異能エネルギーを生み出し、装備するだけで専用技が使用可能。イベント対応や社員支援用のリーサルウェポンとして貸与されます。</p>
+        </div>
+        <div class="eq-card">
+          <h3>SMABRO<span class="en">TRAINING SYSTEM</span></h3>
+          <p>技術部が開発した人工知能搭載のVR模擬戦システム。本社訓練場に設置され、実戦を想定した多対多のバトルシミュレーションを行うことができます。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CAREER / RANK ===== -->
+  <section id="career">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">CAREER</div>
+          <h2>採用情報 — ランク制度</h2>
+        </div>
+        <p>役職とは別に運用される、完全実力主義のランク制度。在籍期間と討伐実績によって評価され、昇格すると社長室にて表彰されます。</p>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="rank-detail">
+        <article>
+          <span class="chip" style="background:var(--steel)"></span>
+          <h4>STEEL</h4>
+          <p>初期ランク。全社員がここからスタートし、実績を積みながら昇格を目指します。</p>
+        </article>
+        <article>
+          <span class="chip" style="background:var(--bronze)"></span>
+          <h4>BRONZE</h4>
+          <p>在籍1ヶ月以上かつエネミーレベル2.5単騎討伐、またはレベル3単騎討伐で昇格。中途スカウト社員はここからの配属も。</p>
+        </article>
+        <article>
+          <span class="chip" style="background:var(--silver)"></span>
+          <h4>SILVER</h4>
+          <p>在籍半年以上かつレベル3.5単騎討伐、または在籍1ヶ月以上でレベル4単騎討伐にて昇格。多くの社員がここに定着します。</p>
+        </article>
+        <article>
+          <span class="chip" style="background:linear-gradient(135deg,#F4D06F,#C98A2E)"></span>
+          <h4>GOLD</h4>
+          <p>在籍1年以上かつレベル4.5単騎討伐、または在籍半年以上でレベル5単騎討伐にて昇格。長年の研鑽が実を結ぶ準最高ランク。</p>
+        </article>
+        <article>
+          <span class="chip" style="background:linear-gradient(135deg,var(--gold-bright),var(--gold))"></span>
+          <h4>PLATINUM</h4>
+          <p>在籍3年以上かつレベル5.5討伐、または在籍1年以上でレベル6単騎討伐。到達できるのはごく一握りの最高ランクです。</p>
+        </article>
+      </div>
+      <p style="margin-top:28px; font-size:12.5px; color:var(--text-faint); font-family:var(--font-data);">※ 月間討伐数10体以下の場合、ランクが降格となることがあります。</p>
+    </div>
+  </section>
+
+  <!-- ===== NEWS ===== -->
+  <section id="news">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <div class="eyebrow">NEWS</div>
+          <h2>お知らせ</h2>
+        </div>
+        <p>採用・活動実績・社内トピックなどを随時更新しています。</p>
+      </div>
+      <div class="news-list">
+        <div class="news-item">
+          <div class="news-date">2026.08.06</div>
+          <div class="news-tag">RECRUIT</div>
+          <h4>戦闘部・遊撃部隊にて中途採用を開始しました。</h4>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026.07.28</div>
+          <div class="news-tag">COMPANY</div>
+          <h4>技術部SMABRO訓練システムのアップデートを実施しました。</h4>
+        </div>
+        <div class="news-item flag">
+          <div class="news-date">2026.07.15</div>
+          <div class="news-tag">NOTICE</div>
+          <h4>本社周辺エリアにて一時的な立入制限を実施いたします。詳細は追ってご案内します。</h4>
+        </div>
+        <div class="news-item">
+          <div class="news-date">2026.06.30</div>
+          <div class="news-tag">COMPANY</div>
+          <h4>上半期ランク昇格者の表彰式を執り行いました。</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section id="contact" style="border-bottom:none;">
+    <div class="wrap contact-band">
+      <svg class="contact-rings" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <circle cx="200" cy="200" r="190" fill="none" stroke="#000000" stroke-width="1"/>
+        <circle cx="200" cy="200" r="140" fill="none" stroke="#000000" stroke-width="1"/>
+        <circle cx="200" cy="200" r="90" fill="none" stroke="#000000" stroke-width="1"/>
+        <line x1="200" y1="0" x2="200" y2="400" stroke="#000000" stroke-width="1"/>
+        <line x1="0" y1="200" x2="400" y2="200" stroke="#000000" stroke-width="1"/>
+      </svg>
+      <div class="eyebrow" style="justify-content:center;">CONTACT</div>
+      <h2>依頼・採用に関するお問い合わせは<br>こちらから承っております。</h2>
+      <a href="mailto:contact@infinity-brave.example" class="btn btn-primary">お問い合わせフォームへ</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <a href="#top" class="brand">
+        <span class="mark" aria-hidden="true"><img src="assets/fist-mark.png" alt="拳のシンボルマーク"></span>
+        <span>インフィニティブレイブ</span>
+      </a>
+      <div class="foot-links">
+        <a href="#about">会社概要</a>
+        <a href="#business">事業内容</a>
+        <a href="#career">採用情報</a>
+        <a href="#contact">お問い合わせ</a>
+      </div>
+    </div>
+    <div class="foot-copy">© INFINITY BRAVE CO., LTD. 本サイトはフィクションです。</div>
+  </div>
+</footer>
+
+</body>
+</html>
