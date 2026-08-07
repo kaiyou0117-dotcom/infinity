@@ -2,6 +2,15 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<script>
+(function(){
+  try{
+    if(localStorage.getItem('ib-theme') === 'dark'){
+      document.documentElement.classList.add('dark-mode');
+    }
+  }catch(e){}
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>株式会社インフィニティブレイブ｜公式サイト</title>
 <meta name="description" content="株式会社インフィニティブレイブ　公式サイト。見えざる脅威『エネミー』からこの街の平穏を守る、異能人材の専門集団です。">
@@ -23,6 +32,10 @@
     --blue: #142352;
     --blue-deep: #0A1531;
 
+    --hover-1: rgba(255,255,255,0.72);
+    --hover-2: rgba(255,255,255,0.5);
+    --hover-3: rgba(255,255,255,0.07);
+
     --gold: #B4872C;
     --gold-bright: #E3B24A;
 
@@ -34,6 +47,26 @@
     --font-body: 'Noto Sans JP', sans-serif;
     --font-data: 'Space Grotesk', 'Zen Kaku Gothic New', sans-serif;
   }
+
+  html.dark-mode{
+    --bg: #0B0F1C;
+    --bg-panel: #131829;
+    --bg-panel-alt: #171E36;
+    --line: rgba(255,255,255,0.12);
+    --line-strong: rgba(255,255,255,0.26);
+    --text: #F1F2F6;
+    --text-muted: #ABB1C4;
+    --text-faint: #6E7490;
+
+    --ink: #F1F2F6;
+    --blue: #1B2E68;
+    --blue-deep: #0A1531;
+
+    --hover-1: rgba(0,0,0,0.68);
+    --hover-2: rgba(0,0,0,0.48);
+    --hover-3: rgba(0,0,0,0.07);
+  }
+  html, body{ transition: background-color 0.3s ease, color 0.3s ease; }
 
   *{ box-sizing: border-box; }
   html{ scroll-behavior: smooth; }
@@ -164,6 +197,41 @@
   .nav-cta:hover, .nav-cta:focus-visible{ border-color:var(--gold-bright); background: var(--gold-bright); color:var(--blue-deep); }
   .menu-btn{ display:none; }
 
+  .nav-tools{ display:flex; align-items:center; gap:18px; }
+
+  .site-search{
+    display:flex; align-items:center; gap:8px;
+    border-bottom:1px solid rgba(255,255,255,0.35);
+    padding:4px 2px;
+    transition: border-color 0.2s ease;
+  }
+  .site-search:focus-within{ border-color:var(--gold-bright); }
+  .site-search input{
+    background:none; border:none; outline:none;
+    font-family:var(--font-body); font-size:13px;
+    color:#fff; width:120px;
+  }
+  .site-search input::placeholder{ color:rgba(255,255,255,0.5); }
+  .site-search button{
+    background:none; border:none; padding:0; cursor:pointer;
+    display:flex; align-items:center;
+  }
+  .site-search svg{ width:15px; height:15px; stroke:rgba(255,255,255,0.75); }
+  @media (max-width:1080px){ .site-search{ display:none; } }
+
+  .theme-toggle{
+    background:none; border:1px solid rgba(255,255,255,0.35);
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    cursor:pointer; flex:none;
+    transition: border-color 0.2s ease;
+  }
+  .theme-toggle:hover, .theme-toggle:focus-visible{ border-color:var(--gold-bright); }
+  .theme-toggle svg{ width:16px; height:16px; stroke:#fff; }
+  .theme-toggle .icon-moon{ display:none; }
+  html.dark-mode .theme-toggle .icon-sun{ display:none; }
+  html.dark-mode .theme-toggle .icon-moon{ display:block; }
+
   @media (max-width:860px){
     nav.links{ display:none; }
     .menu-btn{
@@ -179,27 +247,32 @@
     border-bottom:1px solid var(--line);
   }
   .hero-split{
-    position:relative;
+    display:flex;
+    align-items:stretch;
   }
   .hero-text{
+    flex:1 1 0%;
+    min-width:0;
+    position:relative; z-index:2;
     display:flex; flex-direction:column; justify-content:flex-start;
     padding: 40px clamp(24px,6vw,96px) 56px clamp(20px,7vw,80px);
-    position:relative;
   }
   .hero-visual{
-    position:absolute; top:0; right:0; bottom:0;
-    width:56%;
+    flex:0 0 56%;
+    position:relative; z-index:1;
     background: var(--blue);
     clip-path: polygon(14% 0, 100% 0, 100% 100%, 0 100%);
     overflow:hidden;
   }
   @media (max-width:920px){
+    .hero-split{ display:flex; flex-direction:column; }
+    .hero-text{ z-index:auto; flex:none; }
     .hero-visual{
-      position:static; width:auto;
+      flex:none;
+      width:auto; height:auto;
       clip-path:none; min-height:220px;
       order:2;
     }
-    .hero-split{ display:flex; flex-direction:column; }
   }
   .hero-visual::before{
     content:"";
@@ -207,23 +280,109 @@
     background-image: linear-gradient(rgba(255,255,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.08) 1px, transparent 1px);
     background-size: 56px 56px;
   }
-  .hero-visual::after{
-    content:"";
-    position:absolute; top:14%; left:24%;
-    width:220px; height:220px;
+
+  .status-panel{
+    position:absolute; top:422px; left:16%;
+    width:224px;
     border:1px solid rgba(255,255,255,0.3);
-    clip-path: polygon(30% 0, 100% 0, 100% 100%, 0 64%);
+    background: rgba(255,255,255,0.04);
+    padding:14px 16px;
   }
-  .hero-visual-label{
-    position:absolute; left:14%; bottom:56px;
-    font-family: var(--font-data);
-    color:#fff;
-    font-size:13px; letter-spacing:0.2em;
-    max-width:60%;
-    line-height:2;
+  @media (max-width:1100px){ .status-panel{ top:378px; left:14%; width:200px; } }
+  @media (max-width:920px){ .status-panel{ position:static; width:auto; max-width:340px; margin:24px 24px 0; } }
+  .status-panel .sp-head{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--font-data); font-size:10.5px; letter-spacing:0.14em;
+    color:rgba(255,255,255,0.6);
+    padding-bottom:10px; margin-bottom:10px;
+    border-bottom:1px solid rgba(255,255,255,0.2);
   }
-  @media (max-width:920px){ .hero-visual-label{ left:24px; bottom:24px; } }
-  .hero-visual-label b{ display:block; font-size:22px; letter-spacing:0.04em; color:var(--gold-bright); margin-bottom:6px; }
+  .sp-dot{
+    width:6px; height:6px; border-radius:50%;
+    background:#4CD787; box-shadow:0 0 6px #4CD787;
+    animation: spPulse 1.8s ease-in-out infinite;
+  }
+  @keyframes spPulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.35; } }
+  .sp-row{
+    display:flex; justify-content:space-between; align-items:baseline;
+    font-family:var(--font-data); font-size:12px; color:rgba(255,255,255,0.7);
+    padding:6px 0;
+  }
+  .sp-row b{ color:var(--gold-bright); font-weight:700; font-size:13px; }
+
+  .ward-map{
+    position:absolute; top:90px; left:16%;
+    width:270px;
+  }
+  @media (max-width:1100px){ .ward-map{ left:14%; width:230px; } }
+  @media (max-width:920px){ .ward-map{ position:static; margin:24px 24px 0; width:auto; max-width:340px; } }
+  .wm-head{
+    font-family:var(--font-data); font-size:10px; letter-spacing:0.12em;
+    color:rgba(255,255,255,0.55); margin-bottom:8px;
+  }
+  .ward-map svg{ width:100%; height:auto; display:block; }
+  .wm-outline{ fill:rgba(255,255,255,0.045); stroke:rgba(255,255,255,0.22); stroke-width:1; }
+  .wm-marker{ animation: wmIn 0.6s ease forwards; opacity:0; transform-origin:center; }
+  @keyframes wmIn{ to{ opacity:1; } }
+  .wm-pulse{ animation: wmPulse 2s ease-in-out infinite; transform-origin:center; }
+  @keyframes wmPulse{ 0%,100%{ opacity:1; } 50%{ opacity:0.45; } }
+  .wm-legend{ display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+  .wm-legend span{
+    display:flex; align-items:center; gap:4px;
+    font-family:var(--font-data); font-size:8px;
+    color:rgba(255,255,255,0.48);
+  }
+  .wm-legend i{ width:6px; height:6px; border-radius:50%; display:inline-block; }
+
+  .cert-stack{
+    position:absolute; right:9%; bottom:9%;
+    display:flex; flex-direction:column; gap:16px;
+    width:272px;
+    max-width:70%;
+  }
+  @media (max-width:1100px){ .cert-stack{ right:6%; width:240px; } }
+  @media (max-width:920px){ .cert-stack{ position:static; width:auto; max-width:420px; margin:32px 24px 0; } }
+  .cert-badge{
+    position:relative;
+    background: rgba(255,255,255,0.045);
+    border:1px solid rgba(255,255,255,0.32);
+    padding:16px 18px;
+  }
+  .cert-badge:nth-child(1){ transform:rotate(-1.4deg); }
+  .cert-badge:nth-child(2){ transform:rotate(0.9deg); }
+  .cert-badge:nth-child(3){ transform:rotate(-0.6deg); }
+  .cert-badge::before{
+    content:"";
+    position:absolute; inset:5px;
+    border:1px solid rgba(255,255,255,0.14);
+    pointer-events:none;
+  }
+  .cert-seal{
+    position:absolute; top:-12px; right:-10px;
+    width:38px; height:38px;
+    border:1px solid var(--gold-bright);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-data); font-size:9px; color:var(--gold-bright);
+    letter-spacing:0.05em; text-align:center; line-height:1.3;
+    background: var(--blue);
+  }
+  .cert-eyebrow{
+    font-family: var(--font-data); font-size:10px; letter-spacing:0.16em;
+    color: rgba(255,255,255,0.5); position:relative; z-index:1;
+  }
+  .cert-title{
+    font-family: var(--font-display); font-weight:700; font-size:15.5px;
+    color:#fff; margin-top:7px; line-height:1.4; position:relative; z-index:1;
+  }
+  .cert-num{
+    font-family: var(--font-data); font-size:10.5px; color:var(--gold-bright);
+    margin-top:10px; letter-spacing:0.03em; position:relative; z-index:1;
+  }
+
+  .hero-visual::after{
+    content:none;
+  }
 
   .file-tag{
     display:inline-flex; align-items:center; gap:10px;
@@ -239,21 +398,20 @@
   .file-tag i{ width:6px; height:6px; background:var(--gold); display:inline-block; flex:none; }
 
   .hero h1{
-    font-size: clamp(38px, 6.6vw, 104px);
-    line-height:1.05;
+    font-size: clamp(22px, 2.7vw, 46px);
+    line-height:1.3;
     font-weight:800;
+    color: var(--ink);
     white-space: nowrap;
-    color:#FFFFFF;
-    mix-blend-mode: difference;
-    position:relative;
-    z-index:2;
+  }
+  @media (max-width:920px){
+    .hero h1{ font-size: clamp(32px, 6.4vw, 64px); white-space:normal; }
   }
   @media (max-width:600px){
     .hero h1{ font-size: clamp(28px, 10vw, 48px); }
   }
   .hero h1 em{
     font-style:normal;
-    position:relative;
   }
   .hero-rule{
     width:120px; height:4px;
@@ -285,7 +443,7 @@
     transition: transform 0.3s ease;
     z-index:1;
   }
-  .btn-primary{ background: var(--ink); color:#FFFFFF; font-weight:600; }
+  .btn-primary{ background: var(--ink); color:var(--bg); font-weight:600; }
   .btn-primary::before{ background: var(--gold); }
   .btn-primary:hover{ color:var(--ink); }
   .btn-primary:hover::before{ transform:translateX(0); }
@@ -308,6 +466,73 @@
   .stat-num{ font-family: var(--font-data); font-size:32px; font-weight:700; color:var(--text); }
   .stat-num sup{ font-size:14px; color:var(--gold); margin-left:2px; }
   .stat-label{ margin-top:6px; font-size:12.5px; color:var(--text-muted); letter-spacing:0.02em; }
+
+  /* ===== Achievements carousel ===== */
+  .ach-section{ padding:0; border-bottom:1px solid var(--line); }
+  .ach-carousel{ position:relative; }
+  .ach-slides{ position:relative; height:280px; overflow:hidden; }
+  @media (max-width:760px){ .ach-slides{ height:380px; } }
+  .ach-track{
+    display:flex;
+    height:100%;
+    width:100%;
+    transition: transform 0.7s cubic-bezier(.65,0,.35,1);
+    will-change: transform;
+    cursor:grab;
+    touch-action: pan-y;
+    user-select:none;
+  }
+  .ach-track:active{ cursor:grabbing; }
+  .ach-slide{ -webkit-user-drag:none; }
+  .ach-slide img{ pointer-events:none; }
+  .ach-slide{
+    position:relative;
+    flex:0 0 100%;
+    width:100%;
+    display:flex; align-items:center;
+    background: var(--bg-panel);
+  }
+  .ach-shape{
+    position:absolute; top:0; right:0; bottom:0;
+    width:46%;
+    background: var(--blue);
+    clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
+  }
+  @media (max-width:760px){ .ach-shape{ width:60%; } }
+  .ach-inner{ position:relative; z-index:1; display:flex; flex-direction:column; }
+  .ach-eyebrow{
+    font-family: var(--font-data); font-size:11.5px; letter-spacing:0.2em;
+    color: var(--gold); text-transform:uppercase;
+  }
+  .ach-head{
+    font-size: clamp(22px, 2.6vw, 32px);
+    margin-top:10px; max-width:20ch;
+  }
+  .ach-head em{ font-style:normal; color:var(--gold); }
+  .ach-text{
+    margin-top:14px; max-width:44ch; font-size:14px; color:var(--text-muted);
+  }
+  .ach-badge{
+    position:absolute; right:8%; top:50%; transform:translateY(-50%);
+    font-family: var(--font-data); color:#fff; text-align:center;
+    font-size:14px; letter-spacing:0.1em;
+    border:1px solid rgba(255,255,255,0.4);
+    padding:16px 22px;
+  }
+  @media (max-width:760px){ .ach-badge{ right:6%; padding:12px 16px; } }
+  .ach-badge span{ display:block; font-size:26px; font-weight:700; color:var(--gold-bright); margin-top:4px; }
+
+  .ach-controls{
+    position:absolute; left:0; right:0; bottom:20px;
+    display:flex; align-items:center; justify-content:center; gap:20px;
+  }
+  .ach-dots{ display:flex; gap:10px; }
+  .ach-dot{
+    width:9px; height:9px; border-radius:50%;
+    background:var(--line-strong); border:none; padding:0; cursor:pointer;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .ach-dot.is-active{ background:var(--ink); transform:scale(1.2); }
 
   /* ===== Section shared ===== */
   section{ padding:120px 0; border-bottom:1px solid var(--line); }
@@ -364,14 +589,14 @@
     transition: color 0.25s ease;
     pointer-events:none;
   }
-  .dept-card:hover{ background:var(--ink); color:#fff; }
-  .dept-card:hover::after{ color: rgba(255,255,255,0.07); }
+  .dept-card:hover{ background:var(--ink); color:var(--bg); }
+  .dept-card:hover::after{ color: var(--hover-3); }
   .dept-code{ font-family:var(--font-data); font-size:12px; color:var(--gold); letter-spacing:0.1em; position:relative; z-index:1; }
   .dept-card h3{ font-size:19px; margin-top:14px; position:relative; z-index:1; }
   .dept-card p{ margin-top:12px; font-size:13.5px; color:var(--text-muted); flex:1; position:relative; z-index:1; }
-  .dept-card:hover p{ color:rgba(255,255,255,0.72); }
+  .dept-card:hover p{ color:var(--hover-1); }
   .dept-note{ margin-top:16px; font-size:11.5px; color:var(--text-faint); font-family:var(--font-data); position:relative; z-index:1; }
-  .dept-card:hover .dept-note{ color:rgba(255,255,255,0.5); }
+  .dept-card:hover .dept-note{ color:var(--hover-2); }
 
   .division-strip{ margin-top:1px; display:grid; grid-template-columns: repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-top:none; }
   @media (max-width:720px){ .division-strip{ grid-template-columns: 1fr; } }
@@ -471,6 +696,13 @@
   .contact-band h2{ font-size: clamp(26px,3.8vw,42px); max-width:20ch; margin:0 auto; }
   .contact-band .btn{ margin-top:34px; }
 
+  /* scroll reveal */
+  .reveal{
+    opacity:0; transform:translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.in-view{ opacity:1; transform:translateY(0); }
+
   footer{ padding:48px 0; }
   .foot-grid{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
   .foot-grid .brand{ font-size:15px; color:var(--ink); }
@@ -494,8 +726,20 @@
       <a href="#career">採用情報</a>
       <a href="#news">お知らせ</a>
     </nav>
-    <a href="#contact" class="nav-cta">お問い合わせ</a>
-    <button class="menu-btn" aria-label="メニューを開く">MENU</button>
+    <div class="nav-tools">
+      <form class="site-search" onsubmit="return false;">
+        <input type="text" placeholder="サイト内検索" aria-label="サイト内検索">
+        <button type="submit" aria-label="検索する">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke-width="2"/><line x1="21" y1="21" x2="16.2" y2="16.2" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </form>
+      <button class="theme-toggle" aria-label="ダークモード切り替え" onclick="document.documentElement.classList.toggle('dark-mode'); try{localStorage.setItem('ib-theme', document.documentElement.classList.contains('dark-mode')?'dark':'light');}catch(e){}">
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="4.2" stroke-width="2"/><g stroke-width="2" stroke-linecap="round"><line x1="12" y1="1.5" x2="12" y2="4.5"/><line x1="12" y1="19.5" x2="12" y2="22.5"/><line x1="1.5" y1="12" x2="4.5" y2="12"/><line x1="19.5" y1="12" x2="22.5" y2="12"/><line x1="4.4" y1="4.4" x2="6.5" y2="6.5"/><line x1="17.5" y1="17.5" x2="19.6" y2="19.6"/><line x1="4.4" y1="19.6" x2="6.5" y2="17.5"/><line x1="17.5" y1="6.5" x2="19.6" y2="4.4"/></g></svg>
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5Z" stroke-width="2" stroke-linejoin="round"/></svg>
+      </button>
+      <a href="#contact" class="nav-cta">お問い合わせ</a>
+      <button class="menu-btn" aria-label="メニューを開く">MENU</button>
+    </div>
   </div>
 </header>
 
@@ -548,7 +792,255 @@
       </div>
 
       <div class="hero-visual">
-        <div class="hero-visual-label"><b>ENEMY LEVEL 1–6</b>異能省の脅威区分に基づき、<br>案件ごとに最適な部隊を編成。</div>
+        <div class="ward-map">
+          <div class="wm-head">都内23区 エネミー発生分布（過去1ヶ月間の記録）</div>
+          <svg viewBox="0 0 300 308" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="都内23区におけるエネミー発生分布の模式図">
+            <path class="wm-outline" d="M21.4,40.3 L0.0,59.1 L1.7,99.4 L24.9,114.0 L16.3,149.1 L22.3,206.6 L84.9,236.6 L96.0,263.1 L116.6,273.4 L116.6,291.4 L163.7,283.7 L198.9,296.6 L204.0,307.7 L223.7,282.0 L207.4,289.7 L187.7,257.1 L176.6,256.3 L187.7,246.0 L165.4,209.1 L166.3,174.0 L179.1,178.3 L172.3,203.1 L192.9,233.1 L216.0,244.3 L225.4,238.3 L213.4,215.1 L192.9,217.7 L200.6,188.6 L216.0,183.4 L231.4,211.7 L234.9,169.7 L247.7,185.1 L268.3,180.9 L272.6,144.0 L300.0,124.3 L267.4,54.9 L278.6,36.0 L261.4,36.9 L261.4,20.6 L220.3,24.0 L217.7,0.0 L198.0,12.0 L169.7,0.0 L157.7,7.7 L164.6,24.9 L153.4,35.1 L108.9,17.1 L64.3,21.4 L50.6,48.9 Z"/>
+            <circle class="wm-marker" cx="135.6" cy="112.9" r="2.8" fill="#B97A46"/>
+            <circle class="wm-marker" cx="145.5" cy="155.0" r="3.0" fill="#B97A46"/>
+            <circle class="wm-marker" cx="146.8" cy="110.7" r="2.9" fill="#B97A46"/>
+            <circle class="wm-marker" cx="155.3" cy="120.1" r="2.9" fill="#B97A46"/>
+            <circle class="wm-marker" cx="154.5" cy="119.6" r="3.0" fill="#B97A46"/>
+            <circle class="wm-marker" cx="123.0" cy="112.4" r="3.0" fill="#B97A46"/>
+            <circle class="wm-marker" cx="140.0" cy="114.5" r="3.1" fill="#B97A46"/>
+            <circle class="wm-marker" cx="132.1" cy="96.6" r="2.7" fill="#B97A46"/>
+            <circle class="wm-marker" cx="159.6" cy="111.3" r="2.7" fill="#B97A46"/>
+            <circle class="wm-marker" cx="176.6" cy="143.1" r="3.0" fill="#B97A46"/>
+            <circle class="wm-marker" cx="152.4" cy="81.3" r="2.9" fill="#B97A46"/>
+            <circle class="wm-marker" cx="161.7" cy="113.1" r="2.9" fill="#B97A46"/>
+            <circle class="wm-marker" cx="154.7" cy="88.2" r="3.1" fill="#B97A46"/>
+            <circle class="wm-marker" cx="106.4" cy="99.8" r="2.6" fill="#B97A46"/>
+            <circle class="wm-marker" cx="141.7" cy="136.3" r="2.6" fill="#B97A46"/>
+            <circle class="wm-marker" cx="140.2" cy="127.8" r="2.8" fill="#B97A46"/>
+            <circle class="wm-marker" cx="151.7" cy="162.3" r="3.2" fill="#B4872C"/>
+            <circle class="wm-marker" cx="173.2" cy="200.8" r="3.6" fill="#B4872C"/>
+            <circle class="wm-marker" cx="146.7" cy="152.4" r="3.1" fill="#B4872C"/>
+            <circle class="wm-marker wm-pulse" cx="166.0" cy="165.6" r="3.2" fill="#B4872C"/>
+            <circle class="wm-marker" cx="205.1" cy="178.6" r="3.3" fill="#B4872C"/>
+            <circle class="wm-marker" cx="148.0" cy="135.1" r="3.5" fill="#B4872C"/>
+            <circle class="wm-marker" cx="159.8" cy="199.8" r="3.1" fill="#B4872C"/>
+            <circle class="wm-marker" cx="217.8" cy="162.3" r="3.2" fill="#B4872C"/>
+            <circle class="wm-marker" cx="153.4" cy="159.4" r="3.5" fill="#B4872C"/>
+            <circle class="wm-marker" cx="148.3" cy="186.2" r="3.1" fill="#B4872C"/>
+            <circle class="wm-marker" cx="149.2" cy="173.4" r="3.4" fill="#B4872C"/>
+            <circle class="wm-marker" cx="189.0" cy="165.3" r="3.1" fill="#B4872C"/>
+            <circle class="wm-marker" cx="199.0" cy="180.5" r="3.1" fill="#B4872C"/>
+            <circle class="wm-marker" cx="180.0" cy="184.7" r="3.4" fill="#B4872C"/>
+            <circle class="wm-marker" cx="175.1" cy="154.7" r="3.0" fill="#B4872C"/>
+            <circle class="wm-marker" cx="104.2" cy="239.7" r="3.3" fill="#B4872C"/>
+            <circle class="wm-marker" cx="218.8" cy="171.7" r="3.0" fill="#B4872C"/>
+            <circle class="wm-marker" cx="160.8" cy="142.3" r="3.3" fill="#B4872C"/>
+            <circle class="wm-marker" cx="164.1" cy="218.0" r="3.1" fill="#B4872C"/>
+            <circle class="wm-marker" cx="141.8" cy="192.4" r="3.6" fill="#B4872C"/>
+            <circle class="wm-marker" cx="220.8" cy="128.3" r="2.6" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="229.3" cy="182.2" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="199.9" cy="168.9" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="229.6" cy="169.5" r="2.6" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="213.7" cy="114.4" r="2.3" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="207.1" cy="143.8" r="2.9" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="238.0" cy="112.4" r="2.5" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="249.6" cy="155.5" r="2.9" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="230.0" cy="152.5" r="2.3" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="211.4" cy="104.0" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="182.5" cy="144.1" r="2.5" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="224.5" cy="124.0" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="187.7" cy="195.6" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="255.8" cy="180.5" r="2.3" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="223.4" cy="235.4" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="199.4" cy="193.6" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="225.9" cy="191.1" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="187.5" cy="211.0" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="230.6" cy="203.0" r="2.5" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="249.8" cy="156.1" r="2.9" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="228.4" cy="193.6" r="2.6" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="226.0" cy="181.2" r="2.6" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="189.3" cy="192.4" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="197.7" cy="191.4" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="256.3" cy="96.8" r="2.3" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="239.6" cy="79.2" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="243.6" cy="93.8" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="226.8" cy="75.7" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="243.9" cy="79.0" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="218.7" cy="74.6" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="189.5" cy="81.7" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="230.1" cy="74.4" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="225.5" cy="74.0" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="270.1" cy="132.7" r="2.3" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="262.5" cy="148.1" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="262.6" cy="115.2" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="268.7" cy="138.1" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="261.5" cy="166.4" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="266.4" cy="165.4" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="268.1" cy="161.7" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="274.7" cy="133.2" r="2.3" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="269.7" cy="141.6" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="171.7" cy="15.3" r="2.1" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="186.5" cy="25.4" r="2.2" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="197.0" cy="13.3" r="2.2" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="171.9" cy="20.4" r="1.8" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="167.4" cy="57.8" r="2.2" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="183.1" cy="37.0" r="1.8" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="64.4" cy="30.6" r="1.9" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="51.1" cy="57.5" r="2.3" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="87.6" cy="30.3" r="2.2" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="60.7" cy="61.5" r="2.1" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="39.3" cy="97.0" r="2.2" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="77.7" cy="41.4" r="1.9" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="71.1" cy="213.3" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="77.4" cy="211.6" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="72.8" cy="209.0" r="2.0" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="101.3" cy="185.1" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="57.0" cy="207.3" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="106.3" cy="255.1" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="83.4" cy="218.6" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="56.2" cy="215.3" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="111.9" cy="222.5" r="2.3" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="162.8" cy="273.5" r="2.1" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="191.0" cy="291.0" r="2.2" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="191.8" cy="283.0" r="1.8" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="179.4" cy="275.1" r="2.1" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="161.7" cy="281.9" r="1.8" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="168.2" cy="271.9" r="1.8" fill="rgba(255,255,255,0.38)"/>
+            <circle class="wm-marker" cx="83.2" cy="136.0" r="2.9" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="88.2" cy="129.2" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="108.6" cy="110.9" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="63.8" cy="75.3" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="137.5" cy="116.2" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="90.2" cy="105.3" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="51.8" cy="116.6" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="78.8" cy="132.6" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="71.6" cy="102.5" r="2.6" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="83.1" cy="117.9" r="2.3" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="146.2" cy="96.5" r="2.5" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="138.8" cy="77.1" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="138.6" cy="48.8" r="2.3" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="127.8" cy="94.5" r="2.5" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="155.9" cy="101.3" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="121.8" cy="63.5" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="152.0" cy="59.4" r="2.3" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="128.8" cy="108.5" r="2.8" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="171.2" cy="73.6" r="2.7" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="122.4" cy="71.8" r="2.4" fill="#C7CCD6"/>
+            <circle class="wm-marker" cx="178.8" cy="119.7" r="2.0" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="160.4" cy="124.3" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="185.7" cy="118.2" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="171.8" cy="96.9" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="170.9" cy="98.3" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="188.8" cy="115.8" r="2.0" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="165.6" cy="108.9" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="176.3" cy="81.7" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="252.1" cy="107.5" r="2.0" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="268.2" cy="122.8" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="229.0" cy="142.0" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="226.8" cy="94.3" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="246.2" cy="123.6" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="264.6" cy="139.9" r="2.3" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="250.8" cy="148.6" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="257.7" cy="142.3" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="146.2" cy="232.9" r="2.6" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="123.3" cy="212.7" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="99.1" cy="167.5" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="118.4" cy="202.7" r="2.4" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="113.9" cy="203.8" r="2.5" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="135.0" cy="189.4" r="2.1" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="152.7" cy="206.7" r="2.2" fill="rgba(255,255,255,0.6)"/>
+            <circle class="wm-marker" cx="103.7" cy="217.9" r="2.3" fill="rgba(255,255,255,0.6)"/>
+            </svg>
+          <div class="wm-legend">
+            <span><i style="background:rgba(255,255,255,0.4)"></i>Lv1</span>
+            <span><i style="background:rgba(255,255,255,0.65)"></i>Lv2</span>
+            <span><i style="background:#C7CCD6"></i>Lv3</span>
+            <span><i style="background:#B97A46"></i>Lv4</span>
+            <span><i style="background:#B4872C"></i>Lv5</span>
+            <span><i style="background:#E3B24A"></i>Lv6</span>
+          </div>
+        </div>
+        <div class="status-panel">
+          <div class="sp-head"><span class="sp-dot"></span>SYSTEM STATUS — LIVE</div>
+          <div class="sp-row">本日の稼働隊員 <b>12名</b></div>
+          <div class="sp-row">対応中の案件 <b>3件</b></div>
+          <div class="sp-row">現在の警戒レベル <b>Lv.2</b></div>
+        </div>
+        <div class="cert-stack">
+          <div class="cert-badge">
+            <div class="cert-seal">認定<br>SEAL</div>
+            <div class="cert-eyebrow">発行：異能省</div>
+            <div class="cert-title">第一種エネミー対策事業者<br>認定証</div>
+            <div class="cert-num">認定番号 IB-0417 ／ 有効期限 2027.03.31</div>
+          </div>
+          <div class="cert-badge">
+            <div class="cert-eyebrow">異能省 武器・異産取扱課</div>
+            <div class="cert-title">異産等取扱許可証</div>
+            <div class="cert-num">許可番号 W-1189</div>
+          </div>
+          <div class="cert-badge">
+            <div class="cert-eyebrow">異能業務災害共済組合</div>
+            <div class="cert-title">特殊労災保険 加入証</div>
+            <div class="cert-num">証書番号 K-2603</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ACHIEVEMENTS CAROUSEL ===== -->
+  <section id="achievements" class="ach-section" aria-label="実績・受賞歴">
+    <div class="ach-carousel">
+      <div class="ach-slides">
+        <div class="ach-track">
+        <div class="ach-slide" aria-hidden="true">
+          <div class="ach-shape"></div>
+          <div class="wrap ach-inner">
+            <div class="ach-eyebrow">MEDIA</div>
+            <h3 class="ach-head">業界誌にて <em>特集掲載</em></h3>
+            <p class="ach-text">「週刊エネミー討伐タイムズ」にて、戦闘部の現場対応力についての特集記事が組まれました。</p>
+          </div>
+            <div class="ach-badge">VOL.<span>142</span></div>
+        </div>
+        <div class="ach-slide is-active">
+          <div class="ach-shape"></div>
+          <div class="wrap ach-inner">
+            <div class="ach-eyebrow">RECORD</div>
+            <h3 class="ach-head">討伐実績 <em>3年連続</em> 都内上位</h3>
+            <p class="ach-text">直近5年間の民間討伐実績において、都内主要事業者の中で上位の実績を継続しています。</p>
+          </div>
+            <div class="ach-badge">TOP<span>3</span></div>
+        </div>
+        <div class="ach-slide">
+          <div class="ach-shape"></div>
+          <div class="wrap ach-inner">
+            <div class="ach-eyebrow">AWARD</div>
+            <h3 class="ach-head">異能省長官表彰 <em>受賞</em></h3>
+            <p class="ach-text">地域社会への貢献が認められ、異能省長官表彰を受賞しました。現場対応力と再発防止への取り組みが評価されています。</p>
+          </div>
+            <div class="ach-badge">AWARD<span>2025</span></div>
+        </div>
+        <div class="ach-slide">
+          <div class="ach-shape"></div>
+          <div class="wrap ach-inner">
+            <div class="ach-eyebrow">MEDIA</div>
+            <h3 class="ach-head">業界誌にて <em>特集掲載</em></h3>
+            <p class="ach-text">「週刊エネミー討伐タイムズ」にて、戦闘部の現場対応力についての特集記事が組まれました。</p>
+          </div>
+            <div class="ach-badge">VOL.<span>142</span></div>
+        </div>
+        <div class="ach-slide" aria-hidden="true">
+          <div class="ach-shape"></div>
+          <div class="wrap ach-inner">
+            <div class="ach-eyebrow">RECORD</div>
+            <h3 class="ach-head">討伐実績 <em>3年連続</em> 都内上位</h3>
+            <p class="ach-text">直近5年間の民間討伐実績において、都内主要事業者の中で上位の実績を継続しています。</p>
+          </div>
+            <div class="ach-badge">TOP<span>3</span></div>
+        </div>
+        </div>
+      </div>
+      <div class="ach-controls">
+        <div class="ach-dots" role="tablist" aria-label="スライド選択">
+          <button class="ach-dot is-active" aria-label="スライド1"></button>
+          <button class="ach-dot" aria-label="スライド2"></button>
+          <button class="ach-dot" aria-label="スライド3"></button>
+        </div>
       </div>
     </div>
   </section>
@@ -571,7 +1063,7 @@
   <!-- ===== BUSINESS / DEPARTMENTS ===== -->
   <section id="business">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <span class="sec-num">02</span>
         <div>
           <div class="eyebrow"><b>02 /</b> BUSINESS</div>
@@ -582,25 +1074,25 @@
     </div>
     <div class="wrap">
       <div class="dept-list">
-        <div class="dept-card" data-num="01">
+        <div class="dept-card reveal" data-num="01">
           <div class="dept-code">DIV. 01 — 突撃部隊</div>
           <h3>突撃</h3>
           <p>単独で強敵と対峙し、難易度の高い依頼を請け負う部隊。一人で十分に渡り合える異能・体力を持つ人材が集まります。</p>
           <div class="dept-note">戦闘部 / 単独運用</div>
         </div>
-        <div class="dept-card" data-num="02">
+        <div class="dept-card reveal" data-num="02">
           <div class="dept-code">DIV. 02 — 遊撃部隊</div>
           <h3>遊撃</h3>
           <p>現場の状況に応じて柔軟に動く、近〜中距離戦闘が主体の部隊。所属社員数が最も多く、部の中核を担います。</p>
           <div class="dept-note">戦闘部 / 最大人員</div>
         </div>
-        <div class="dept-card" data-num="03">
+        <div class="dept-card reveal" data-num="03">
           <div class="dept-code">DIV. 03 — 射撃部隊</div>
           <h3>射撃</h3>
           <p>遠距離から攻撃し、近距離部隊を後方支援。遠距離向けの異能や重火器を扱える人材が中心となります。</p>
           <div class="dept-note">戦闘部 / 後方支援</div>
         </div>
-        <div class="dept-card" data-num="04">
+        <div class="dept-card reveal" data-num="04">
           <div class="dept-code">DIV. 04 — 隠密部隊</div>
           <h3>隠密</h3>
           <p>敵組織への潜入や掩護射撃を担当。隠れる・欺くことに長けた異能、あるいは高い演技力を持つ人材が集まります。</p>
@@ -630,7 +1122,7 @@
   <!-- ===== EQUIPMENT ===== -->
   <section id="equipment">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <div>
           <div class="eyebrow"><b>03 /</b> EQUIPMENT &amp; TECHNOLOGY</div>
           <h2>保有兵器・異産</h2>
@@ -640,19 +1132,19 @@
     </div>
     <div class="wrap">
       <div class="eq-grid">
-        <div class="eq-card">
+        <div class="eq-card reveal">
           <h3>TYPEシリーズ <span class="en">STANDARD GEAR</span></h3>
           <p>変才の金緑石「霊石」を利用した社員向け一般装備。棒型・銃型・拳型・靴型・服型・帽子型・小物型の全6種があり、所持者ごとに二桁のTYPE番号が割り振られます。最大の特徴は形状・色・機能が持ち主に応じて最適化される点です。</p>
         </div>
-        <div class="eq-card">
+        <div class="eq-card reveal">
           <h3>AEF「UNISON」<span class="en">MOBILE UNIT</span></h3>
           <p>破損した傭兵組織のAEF「SB・C1」をJ.NECから引き取り改修した機体。脚部・操縦席には同社の「不知火」由来のパーツを使用し、本体性能が大きく向上しています。</p>
         </div>
-        <div class="eq-card">
+        <div class="eq-card reveal">
           <h3>超越規格 <span class="en">OVER WEAPON</span></h3>
           <p>過去の決戦でオーバーパワーが永続付与され異産化した武器群。無から異能エネルギーを生み出し、装備するだけで専用技が使用可能。イベント対応や社員支援用のリーサルウェポンとして貸与されます。</p>
         </div>
-        <div class="eq-card">
+        <div class="eq-card reveal">
           <h3>SMABRO<span class="en">TRAINING SYSTEM</span></h3>
           <p>技術部が開発した人工知能搭載のVR模擬戦システム。本社訓練場に設置され、実戦を想定した多対多のバトルシミュレーションを行うことができます。</p>
         </div>
@@ -664,7 +1156,7 @@
   <section id="career">
     <div class="career-block">
       <div class="wrap">
-        <div class="sec-head">
+        <div class="sec-head reveal">
           <span class="sec-num">04</span>
           <div>
             <div class="eyebrow"><b>04 /</b> CAREER</div>
@@ -708,7 +1200,7 @@
   <!-- ===== NEWS ===== -->
   <section id="news">
     <div class="wrap">
-      <div class="sec-head">
+      <div class="sec-head reveal">
         <div>
           <div class="eyebrow"><b>05 /</b> NEWS</div>
           <h2>お知らせ</h2>
@@ -716,22 +1208,22 @@
         <p>採用・活動実績・社内トピックなどを随時更新しています。</p>
       </div>
       <div class="news-list">
-        <div class="news-item">
+        <div class="news-item reveal">
           <div class="news-date">2026.08.06</div>
           <div class="news-tag">RECRUIT</div>
           <h4>戦闘部・遊撃部隊にて中途採用を開始しました。</h4>
         </div>
-        <div class="news-item">
+        <div class="news-item reveal">
           <div class="news-date">2026.07.28</div>
           <div class="news-tag">COMPANY</div>
           <h4>技術部SMABRO訓練システムのアップデートを実施しました。</h4>
         </div>
-        <div class="news-item flag">
+        <div class="news-item flag reveal">
           <div class="news-date">2026.07.15</div>
           <div class="news-tag">NOTICE</div>
           <h4>本社周辺エリアにて一時的な立入制限を実施いたします。詳細は追ってご案内します。</h4>
         </div>
-        <div class="news-item">
+        <div class="news-item reveal">
           <div class="news-date">2026.06.30</div>
           <div class="news-tag">COMPANY</div>
           <h4>上半期ランク昇格者の表彰式を執り行いました。</h4>
@@ -775,5 +1267,126 @@
   </div>
 </footer>
 
+<script>
+(function(){
+  var targets = document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window) || !targets.length){
+    targets.forEach(function(el){ el.classList.add('in-view'); });
+    return;
+  }
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        entry.target.classList.add('in-view');
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  targets.forEach(function(el){ io.observe(el); });
+})();
+</script>
+<script>
+(function(){
+  var root = document.querySelector('.ach-carousel');
+  if(!root) return;
+  var viewport = root.querySelector('.ach-slides');
+  var track = root.querySelector('.ach-track');
+  var dots = root.querySelectorAll('.ach-dot');
+  var realCount = dots.length;
+  // track children: [cloneLast, real0, real1, real2, cloneFirst]
+  var current = 1;
+  var timer = null;
+  var interval = 5000;
+  var dragging = false;
+  var startX = 0;
+  var baseIndex = 1;
+  var dragPercent = 0;
+
+  function realIndex(i){ return ((i - 1) % realCount + realCount) % realCount; }
+  function updateDots(i){
+    dots.forEach(function(d, idx){ d.classList.toggle('is-active', idx === realIndex(i)); });
+  }
+  function place(i, animate){
+    track.style.transition = animate ? '' : 'none';
+    track.style.transform = 'translateX(-' + (i * 100) + '%)';
+  }
+  function goTo(i){
+    current = i;
+    place(current, true);
+    updateDots(current);
+  }
+  function next(){ goTo(current + 1); }
+  track.addEventListener('transitionend', function(e){
+    if(e.propertyName !== 'transform') return;
+    if(current === 0){
+      current = realCount;
+      place(current, false);
+      void track.offsetWidth;
+    } else if(current === realCount + 1){
+      current = 1;
+      place(current, false);
+      void track.offsetWidth;
+    }
+  });
+  function start(){
+    stop();
+    timer = setInterval(next, interval);
+  }
+  function stop(){
+    if(timer){ clearInterval(timer); timer = null; }
+  }
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){
+      goTo(i + 1);
+      start();
+    });
+  });
+
+  // init position without transition
+  place(current, false);
+  void track.offsetWidth;
+  updateDots(current);
+
+  function onDown(clientX){
+    dragging = true;
+    stop();
+    startX = clientX;
+    baseIndex = current;
+    dragPercent = 0;
+    track.style.transition = 'none';
+  }
+  function onMove(clientX){
+    if(!dragging) return;
+    var width = viewport.getBoundingClientRect().width;
+    var dx = clientX - startX;
+    dragPercent = (dx / width) * 100;
+    var maxIndex = realCount + 1;
+    var proposed = baseIndex - (dragPercent / 100);
+    if(proposed < 0) proposed = 0;
+    if(proposed > maxIndex) proposed = maxIndex;
+    track.style.transform = 'translateX(-' + (proposed * 100) + '%)';
+  }
+  function onUp(){
+    if(!dragging) return;
+    dragging = false;
+    var threshold = 12;
+    if(dragPercent <= -threshold){ goTo(baseIndex + 1); }
+    else if(dragPercent >= threshold){ goTo(baseIndex - 1); }
+    else { goTo(baseIndex); }
+    start();
+  }
+
+  track.addEventListener('pointerdown', function(e){
+    onDown(e.clientX);
+    try{ track.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  track.addEventListener('pointermove', function(e){ onMove(e.clientX); });
+  track.addEventListener('pointerup', onUp);
+  track.addEventListener('pointercancel', onUp);
+  track.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+  start();
+})();
+</script>
 </body>
 </html>
