@@ -499,6 +499,18 @@
     clip-path: polygon(18% 0, 100% 0, 100% 100%, 0 100%);
   }
   @media (max-width:760px){ .ach-shape{ width:60%; } }
+  .ach-shape.has-photo{
+    background-image:
+      linear-gradient(120deg, rgba(10,21,49,0.85) 15%, rgba(10,21,49,0.48) 90%),
+      url('assets/hq-building.jpg');
+    background-size: cover;
+    background-position: center 35%;
+  }
+  .ach-photo-caption{
+    position:absolute; right:6%; bottom:16px;
+    font-family: var(--font-data); font-size:10px; letter-spacing:0.14em;
+    color: rgba(255,255,255,0.65);
+  }
   .ach-inner{ position:relative; z-index:1; display:flex; flex-direction:column; }
   .ach-eyebrow{
     font-family: var(--font-data); font-size:11.5px; letter-spacing:0.2em;
@@ -1007,11 +1019,12 @@
             <div class="ach-badge">TOP<span>3</span></div>
         </div>
         <div class="ach-slide">
-          <div class="ach-shape"></div>
+          <div class="ach-shape has-photo"></div>
+          <div class="ach-photo-caption">INFINITY BRAVE 本社</div>
           <div class="wrap ach-inner">
             <div class="ach-eyebrow">AWARD</div>
             <h3 class="ach-head">異能省長官表彰 <em>受賞</em></h3>
-            <p class="ach-text">地域社会への貢献が認められ、異能省長官表彰を受賞しました。現場対応力と再発防止への取り組みが評価されています。</p>
+            <p class="ach-text">地域社会への貢献が認められ、異能省長官表彰を受賞しました。本社にて表彰式が執り行われ、現場対応力と再発防止への取り組みが評価されています。</p>
           </div>
             <div class="ach-badge">AWARD<span>2025</span></div>
         </div>
