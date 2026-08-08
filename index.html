@@ -627,9 +627,10 @@
 
   /* departments — even 4-up grid */
   .dept-list{
+    margin-top:1px;
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    gap:1px; background:var(--line); border:1px solid var(--line);
+    gap:1px; background:var(--line); border:1px solid var(--line); border-top:none;
   }
   @media (max-width:920px){
     .dept-list{ grid-template-columns: repeat(2,1fr); }
@@ -660,7 +661,7 @@
   .dept-note{ margin-top:16px; font-size:11.5px; color:var(--text-faint); font-family:var(--font-data); position:relative; z-index:1; }
   .dept-card:hover .dept-note{ color:var(--hover-2); }
 
-  .division-strip{ margin-top:1px; display:grid; grid-template-columns: repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-top:none; }
+  .division-strip{ display:grid; grid-template-columns: repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
   @media (max-width:720px){ .division-strip{ grid-template-columns: 1fr; } }
   .division-strip div{ background: var(--bg-panel-alt); padding:22px 26px; }
   .division-strip h4{ font-size:14.5px; font-family:var(--font-body); font-weight:700; }
@@ -1189,6 +1190,23 @@
       </div>
     </div>
     <div class="wrap">
+      <div class="division-strip">
+        <div>
+          <div class="dept-code">COMBAT</div>
+          <h4>戦闘部</h4>
+          <p>エネミー狩りとして前線で戦う人々が所属する部署。突撃・遊撃・射撃・隠密の4部隊で構成されます。</p>
+        </div>
+        <div>
+          <div class="dept-code">TECHNOLOGY</div>
+          <h4>技術部</h4>
+          <p>戦闘部への武器供給・メンテナンス、社内セキュリティ管理、機械型エネミーの討伐対応を担当。</p>
+        </div>
+        <div>
+          <div class="dept-code">MANAGEMENT</div>
+          <h4>経営部</h4>
+          <p>会社全体の運営を担う部署。事務・総務まわりの業務を通じて現場を支えます。</p>
+        </div>
+      </div>
       <div class="dept-list">
         <div class="dept-card reveal" data-num="01">
           <div class="dept-code">DIV. 01 — 突撃部隊</div>
@@ -1213,23 +1231,6 @@
           <h3>隠密</h3>
           <p>敵組織への潜入や掩護射撃を担当。隠れる・欺くことに長けた異能、あるいは高い演技力を持つ人材が集まります。</p>
           <div class="dept-note">戦闘部 / 潜入・支援</div>
-        </div>
-      </div>
-      <div class="division-strip">
-        <div>
-          <div class="dept-code">TECHNOLOGY</div>
-          <h4>技術部</h4>
-          <p>戦闘部への武器供給・メンテナンス、社内セキュリティ管理、機械型エネミーの討伐対応を担当。</p>
-        </div>
-        <div>
-          <div class="dept-code">MANAGEMENT</div>
-          <h4>経営部</h4>
-          <p>会社全体の運営を担う部署。事務・総務まわりの業務を通じて現場を支えます。</p>
-        </div>
-        <div>
-          <div class="dept-code">TITLES</div>
-          <h4>役職について</h4>
-          <p>年功序列と実力を両輪とする役職制度。部長・副部長・隊長・副隊長の各役職が現場と経営の橋渡しを行います。</p>
         </div>
       </div>
       <div class="business-cta">
