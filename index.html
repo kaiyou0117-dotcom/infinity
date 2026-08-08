@@ -117,7 +117,7 @@
   /* ===== Ticker ===== */
   .ticker{
     margin-top:72px;
-    background: var(--ink);
+    background: #111111;
     color:#fff;
     overflow:hidden;
     white-space:nowrap;
@@ -386,8 +386,9 @@
 
   .file-tag{
     display:inline-flex; align-items:center; gap:10px;
-    border:1px solid var(--ink);
+    border:1px solid #111111;
     background:#fff;
+    color:#111111;
     padding:7px 16px;
     font-family: var(--font-data);
     font-size:11px; letter-spacing:0.18em;
@@ -449,7 +450,7 @@
   .btn-primary:hover::before{ transform:translateX(0); }
   .btn-ghost{ border:1px solid var(--line-strong); color:var(--text); }
   .btn-ghost::before{ background: var(--ink); }
-  .btn-ghost:hover{ color:#fff; border-color:var(--ink); }
+  .btn-ghost:hover{ color:var(--bg); border-color:var(--ink); }
   .btn-ghost:hover::before{ transform:translateX(0); }
   .btn:focus-visible{ outline:2px solid var(--ink); outline-offset:3px; }
 
@@ -511,18 +512,28 @@
     font-family: var(--font-data); font-size:10px; letter-spacing:0.14em;
     color: rgba(255,255,255,0.65);
   }
-  .ach-inner{ position:relative; z-index:1; display:flex; flex-direction:column; }
+  .ach-inner{ display:flex; flex-direction:column; max-width:560px; }
   .ach-eyebrow{
     font-family: var(--font-data); font-size:11.5px; letter-spacing:0.2em;
-    color: var(--gold); text-transform:uppercase;
+    text-transform:uppercase;
+    position:relative; z-index:1;
+    color: #FFFFFF;
+    mix-blend-mode: difference;
+    display:inline-block;
   }
   .ach-head{
     font-size: clamp(22px, 2.6vw, 32px);
-    margin-top:10px; max-width:20ch;
+    margin-top:10px; max-width:26ch;
+    position:relative; z-index:1;
+    color: #FFFFFF;
+    mix-blend-mode: difference;
   }
-  .ach-head em{ font-style:normal; color:var(--gold); }
+  .ach-head em{ font-style:normal; color:#FFFFFF; mix-blend-mode:difference; }
   .ach-text{
-    margin-top:14px; max-width:44ch; font-size:14px; color:var(--text-muted);
+    margin-top:14px; max-width:44ch; font-size:14px;
+    position:relative; z-index:1;
+    color: #FFFFFF;
+    mix-blend-mode: difference;
   }
   .ach-badge{
     position:absolute; right:8%; top:50%; transform:translateY(-50%);
@@ -549,7 +560,7 @@
   /* ===== Section shared ===== */
   section{ padding:120px 0; border-bottom:1px solid var(--line); }
   .sec-head{ position:relative; display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:56px; flex-wrap:wrap; }
-  .sec-head h2{ font-size: clamp(28px,3.4vw,40px); max-width:18ch; position:relative; z-index:1; }
+  .sec-head h2{ font-size: clamp(28px,3.4vw,40px); max-width:30ch; position:relative; z-index:1; }
   .sec-head p{ color:var(--text-muted); max-width:38ch; font-size:15px; }
   .sec-num{
     position:absolute; left:-8px; top:-46px;
@@ -571,21 +582,17 @@
   .about-copy p{ color:var(--text-muted); font-size:15.5px; margin:0 0 18px; }
   .about-copy p:last-child{ margin-bottom:0; }
 
-  /* departments — bento + hover invert */
+  /* departments — even 4-up grid */
   .dept-list{
     display:grid;
     grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: auto auto;
     gap:1px; background:var(--line); border:1px solid var(--line);
   }
-  .dept-card:nth-child(1){ grid-column: span 2; }
   @media (max-width:920px){
     .dept-list{ grid-template-columns: repeat(2,1fr); }
-    .dept-card:nth-child(1){ grid-column: span 2; }
   }
   @media (max-width:560px){
     .dept-list{ grid-template-columns: 1fr; }
-    .dept-card:nth-child(1){ grid-column: span 1; }
   }
   .dept-card{
     position:relative; overflow:hidden;
@@ -693,19 +700,19 @@
   /* contact / footer */
   .contact-band{
     position:relative;
-    text-align:center; padding:8px 0 90px;
+    text-align:center; padding:48px 0 90px;
     overflow:hidden;
   }
+  .contact-band > *{ position:relative; }
   .contact-rings{
-    position:absolute;
+    position:absolute !important;
     left:50%; top:50%;
     width:460px;
     transform: translate(-50%,-50%);
     opacity:0.05;
     pointer-events:none;
   }
-  .contact-band > *{ position:relative; }
-  .contact-band h2{ font-size: clamp(26px,3.8vw,42px); max-width:20ch; margin:0 auto; }
+  .contact-band h2{ font-size: clamp(26px,3.8vw,42px); margin:0 auto; }
   .contact-band .btn{ margin-top:34px; }
 
   /* scroll reveal */
@@ -757,14 +764,18 @@
 
 <div class="ticker" aria-hidden="true">
   <div class="ticker-track">
-    <span>見えない脅威に、確かな力を。</span>
     <span>戦闘部・技術部・経営部　随時採用中</span>
-    <span>ランク制度は完全実力主義</span>
+    <span>完全実力主義</span>
     <span>INFINITY BRAVE CO., LTD.</span>
-    <span>見えない脅威に、確かな力を。</span>
+    <span>累計討伐対応 5,000件超</span>
+    <span>経歴不問。</span>
+    <span>異能省認定事業者</span>
     <span>戦闘部・技術部・経営部　随時採用中</span>
-    <span>ランク制度は完全実力主義</span>
+    <span>完全実力主義</span>
     <span>INFINITY BRAVE CO., LTD.</span>
+    <span>累計討伐対応 5,000件超</span>
+    <span>経歴不問。</span>
+    <span>異能省認定事業者</span>
   </div>
 </div>
 
@@ -1013,8 +1024,8 @@
           <div class="ach-shape"></div>
           <div class="wrap ach-inner">
             <div class="ach-eyebrow">RECORD</div>
-            <h3 class="ach-head">討伐実績 <em>3年連続</em> 都内上位</h3>
-            <p class="ach-text">直近5年間の民間討伐実績において、都内主要事業者の中で上位の実績を継続しています。</p>
+            <h3 class="ach-head">討伐実績 <em>3年連続</em> 都内1位</h3>
+            <p class="ach-text">直近5年間の民間討伐実績において、都内主要事業者の中で第1位の実績を継続しています。</p>
           </div>
             <div class="ach-badge">TOP<span>3</span></div>
         </div>
@@ -1041,8 +1052,8 @@
           <div class="ach-shape"></div>
           <div class="wrap ach-inner">
             <div class="ach-eyebrow">RECORD</div>
-            <h3 class="ach-head">討伐実績 <em>3年連続</em> 都内上位</h3>
-            <p class="ach-text">直近5年間の民間討伐実績において、都内主要事業者の中で上位の実績を継続しています。</p>
+            <h3 class="ach-head">討伐実績 <em>3年連続</em> 都内1位</h3>
+            <p class="ach-text">直近5年間の民間討伐実績において、都内主要事業者の中で第1位の実績を継続しています。</p>
           </div>
             <div class="ach-badge">TOP<span>3</span></div>
         </div>
@@ -1063,7 +1074,7 @@
     <div class="wrap about-grid">
       <div>
         <div class="eyebrow"><b>01 /</b> ABOUT US</div>
-        <blockquote>「戦う理由」よりも先に、<br>「守れる腕」を評価する会社です。</blockquote>
+        <blockquote>会社概要</blockquote>
       </div>
       <div class="about-copy">
         <p>株式会社インフィニティブレイブは、異能を持つ人材が前線でエネミーと対峙し、市民の平穏な暮らしを守ることを目的として設立されました。社名は代表（仮面の社長S）の発案によるもので、「限りない勇気（Infinity Brave）」を体現する存在でありたいという想いが込められています。</p>
@@ -1211,7 +1222,7 @@
   </section>
 
   <!-- ===== NEWS ===== -->
-  <section id="news" style="padding-bottom:16px;">
+  <section id="news" style="padding-bottom:56px;">
     <div class="wrap">
       <div class="sec-head reveal">
         <div>
