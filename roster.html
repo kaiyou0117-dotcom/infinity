@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<script>
+(function(){
+  try{
+    if(localStorage.getItem('ib-theme') === 'dark'){
+      document.documentElement.classList.add('dark-mode');
+    }
+  }catch(e){}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>社員名簿｜株式会社インフィニティブレイブ</title>
+<meta name="description" content="株式会社インフィニティブレイブ 社員名簿。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700;800&family=Noto+Sans+JP:wght@400;500;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FFFFFF;
+    --bg-panel: #F6F6F6;
+    --bg-panel-alt: #EFEFEF;
+    --line: rgba(0,0,0,0.10);
+    --line-strong: rgba(0,0,0,0.24);
+    --text: #111111;
+    --text-muted: #4A4A4A;
+    --text-faint: #8A8A8A;
+
+    --ink: #111111;
+    --blue: #142352;
+    --blue-deep: #0A1531;
+
+    --gold: #B4872C;
+    --gold-bright: #E3B24A;
+
+    --steel: #9BA4B5;
+    --bronze: #B97A46;
+    --silver: #C7CCD6;
+
+    --font-display: 'Shippori Mincho', 'Noto Sans JP', serif;
+    --font-body: 'Noto Sans JP', sans-serif;
+    --font-data: 'Space Grotesk', 'Zen Kaku Gothic New', sans-serif;
+  }
+  html.dark-mode{
+    --bg: #0B0F1C;
+    --bg-panel: #131829;
+    --bg-panel-alt: #171E36;
+    --line: rgba(255,255,255,0.12);
+    --line-strong: rgba(255,255,255,0.26);
+    --text: #F1F2F6;
+    --text-muted: #ABB1C4;
+    --text-faint: #6E7490;
+    --ink: #F1F2F6;
+    --blue: #1B2E68;
+    --blue-deep: #0A1531;
+  }
+  html, body{ transition: background-color 0.3s ease, color 0.3s ease; }
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    background:
+      var(--bg)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg stroke='%23000000' stroke-opacity='0.07' stroke-width='1'%3E%3Cline x1='24' y1='19' x2='24' y2='29'/%3E%3Cline x1='19' y1='24' x2='29' y2='24'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 48px 48px;
+    color: var(--text);
+    font-family: var(--font-body);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color:inherit; text-decoration:none; }
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+  @media (max-width:720px){ .wrap{ padding:0 20px; } }
+  h1,h2{ font-family: var(--font-display); font-weight:700; margin:0; }
+
+  header{
+    position:sticky; top:0; z-index:100;
+    background: var(--blue);
+    border-bottom:1px solid var(--blue-deep);
+  }
+  .nav{ display:flex; align-items:center; justify-content:space-between; height:72px; }
+  .brand{ font-family: var(--font-display); font-weight:900; font-size:17px; color:#fff; display:flex; align-items:center; gap:8px; }
+  .brand small{ display:block; font-family:var(--font-data); font-weight:500; font-size:9px; letter-spacing:0.16em; color:rgba(255,255,255,0.6); margin-top:2px; }
+  .back-link{ font-family:var(--font-data); font-size:12.5px; letter-spacing:0.05em; color:rgba(255,255,255,0.8); border:1px solid rgba(255,255,255,0.4); padding:8px 16px; transition:border-color .2s; }
+  .back-link:hover{ border-color:#fff; color:#fff; }
+
+  .hero{ padding:64px 0 40px; border-bottom:1px solid var(--line); }
+  .eyebrow{ font-family:var(--font-data); font-size:12px; letter-spacing:0.2em; color:var(--ink); text-transform:uppercase; display:flex; align-items:center; gap:10px; margin-bottom:16px; }
+  .eyebrow::before{ content:""; width:26px; height:1px; background:var(--ink); }
+  .hero h1{ font-size: clamp(28px,4vw,44px); }
+  .hero p{ margin-top:14px; max-width:60ch; color:var(--text-muted); font-size:15px; }
+
+  .filters{ display:flex; gap:10px; flex-wrap:wrap; margin-top:30px; }
+  .filter-btn{
+    font-family:var(--font-data); font-size:12px; letter-spacing:0.04em;
+    padding:8px 16px; border:1px solid var(--line-strong); background:var(--bg);
+    color:var(--text-muted); cursor:pointer; transition:.2s;
+  }
+  .filter-btn.is-active, .filter-btn:hover{ background:var(--ink); color:var(--bg); border-color:var(--ink); }
+
+  .roster-meta{
+    display:flex; gap:28px; flex-wrap:wrap; margin-top:28px; padding-top:20px; border-top:1px solid var(--line);
+    font-family:var(--font-data); font-size:12px; color:var(--text-faint);
+  }
+  .roster-meta b{ color:var(--gold); font-size:15px; margin-right:4px; }
+
+  .roster-section{ padding:56px 0 100px; }
+  .roster-grid{
+    display:grid; grid-template-columns: repeat(3, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  @media (max-width:920px){ .roster-grid{ grid-template-columns: repeat(2,1fr); } }
+  @media (max-width:600px){ .roster-grid{ grid-template-columns: 1fr; } }
+
+  .emp-card{
+    background:var(--bg-panel); padding:22px 22px 20px;
+    display:flex; flex-direction:column; gap:12px;
+    opacity:0; transform:translateY(14px);
+    animation: cardIn .5s ease forwards;
+    transition: background .2s ease;
+  }
+  @keyframes cardIn{ to{ opacity:1; transform:translateY(0); } }
+  .emp-card:hover{ background:var(--bg-panel-alt); }
+  .emp-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+  .emp-id{ font-family:var(--font-data); font-size:10px; letter-spacing:0.1em; color:var(--text-faint); }
+  .emp-rank{
+    width:9px; height:9px; border-radius:50%; flex:none; margin-top:4px;
+  }
+  .emp-name{ font-family:var(--font-display); font-weight:700; font-size:17px; line-height:1.4; }
+  .emp-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .emp-tag{
+    font-family:var(--font-data); font-size:10px; letter-spacing:0.04em;
+    border:1px solid var(--line-strong); padding:3px 8px; color:var(--text-muted);
+  }
+  .emp-tag.rank-tag{ border-color:transparent; color:#fff; }
+
+  .redact{
+    height:14px; background: repeating-linear-gradient(90deg, var(--ink), var(--ink) 6px, transparent 6px, transparent 8px);
+    width:70%; opacity:0.85;
+  }
+  .redact.short{ width:40%; }
+  .emp-card.is-classified .emp-name{ filter:blur(0.4px); }
+  .classified-label{
+    font-family:var(--font-data); font-size:10px; letter-spacing:0.12em; color:var(--text-faint);
+  }
+
+  footer{ padding:36px 0; border-top:1px solid var(--line); text-align:center; }
+  .foot-copy{ font-size:12px; color:var(--text-faint); font-family:var(--font-data); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a href="index.html" class="brand">
+      <span>インフィニティブレイブ<small>INFINITY BRAVE CO., LTD.</small></span>
+    </a>
+    <a href="index.html#business" class="back-link">← 事業内容へ戻る</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="wrap">
+      <div class="eyebrow">STAFF ROSTER</div>
+      <h1>社員名簿</h1>
+      <p>株式会社インフィニティブレイブに在籍する社員の一覧です。所属・部隊・ランクを公開していますが、当社の性質上、一部社員については情報を非公開としています。</p>
+
+      <div class="filters" role="group" aria-label="部署で絞り込み">
+        <button class="filter-btn is-active" data-filter="all">すべて</button>
+        <button class="filter-btn" data-filter="combat">戦闘部</button>
+        <button class="filter-btn" data-filter="tech">技術部</button>
+        <button class="filter-btn" data-filter="mgmt">経営部</button>
+        <button class="filter-btn" data-filter="classified">非公開</button>
+      </div>
+
+      <div class="roster-meta">
+        <div><b>32</b>名 登録</div>
+        <div><b>13</b>名 情報非公開</div>
+        <div><b>5</b>階級 スチール〜プラチナ</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="roster-section">
+    <div class="wrap">
+      <div class="roster-grid" id="roster-grid"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-copy">© INFINITY BRAVE CO., LTD. 本サイトはフィクションです。</div>
+  </div>
+</footer>
+
+<script>
+var RANK_COLOR = {
+  'プラチナ': 'linear-gradient(135deg,#E3B24A,#B4872C)',
+  'ゴールド': 'linear-gradient(135deg,#F4D06F,#C98A2E)',
+  'シルバー': '#C7CCD6',
+  'ブロンズ': '#B97A46',
+  'スチール': '#9BA4B5',
+  '代表': 'linear-gradient(135deg,#E3B24A,#B4872C)'
+};
+
+var EMPLOYEES = [
+  {id:'0002', name:'キキーモラ', dept:['mgmt'], tags:['経営陣','代表取締役社長'], rank:'代表'},
+  {id:'0003', name:'松之助', dept:['combat','mgmt'], tags:['戦闘部・経営部','突撃部隊'], rank:'プラチナ'},
+  {id:'0004', name:'ソウマ（妖狐のエネミー）', dept:['combat'], tags:['戦闘部','遊撃・隠密部隊'], rank:'ゴールド'},
+  {id:'0005', name:'ホワイトハッカー', dept:['combat','tech'], tags:['技術部・戦闘部','射撃部隊'], rank:'ゴールド'},
+  {id:'0006', name:'バグのエネミー', dept:['combat','tech'], tags:['技術部・戦闘部','射撃部隊'], rank:'シルバー'},
+  {id:'0007', name:'アルプスの少女ハイネ', dept:['combat'], tags:['戦闘部','遊撃・突撃部隊'], rank:'ブロンズ'},
+  {id:'0008', name:'大電神ロボ', dept:['classified'], tags:[], rank:null},
+  {id:'0009', name:'眼帯の少女', dept:['classified'], tags:[], rank:null},
+  {id:'0010', name:'大上ヒロキ', dept:['classified'], tags:[], rank:null},
+  {id:'0011', name:'草薙護', dept:['classified'], tags:[], rank:null},
+  {id:'0012', name:'イレギュラー', dept:['combat'], tags:['戦闘部','突撃・隠密部隊'], rank:'プラチナ'},
+  {id:'0013', name:'リテル', dept:['classified'], tags:[], rank:null},
+  {id:'0014', name:'厨二病エネミー狩り', dept:['classified'], tags:[], rank:null},
+  {id:'0015', name:'金剛雪', dept:['combat'], tags:['戦闘部','遊撃・隠密部隊'], rank:'ブロンズ'},
+  {id:'0016', name:'狗川 陽', dept:['classified'], tags:[], rank:null},
+  {id:'0017', name:'祠弁英夏', dept:['combat'], tags:['戦闘部','突撃・遊撃部隊'], rank:'ブロンズ'},
+  {id:'0018', name:'来虚清', dept:['classified'], tags:[], rank:null},
+  {id:'0019', name:'エメガルズ・奏弥', dept:['combat'], tags:['戦闘部','突撃部隊'], rank:'ゴールド'},
+  {id:'0020', name:'戦士ジーク', dept:['combat'], tags:['戦闘部','突撃・遊撃部隊'], rank:'ブロンズ'},
+  {id:'0021', name:'野人', dept:['classified'], tags:[], rank:null},
+  {id:'0022', name:'ローザローサ・カナン・パトリック', dept:['combat'], tags:['戦闘部','突撃部隊'], rank:'ブロンズ'},
+  {id:'0023', name:'嵐のエネミー', dept:['classified'], tags:[], rank:null},
+  {id:'0024', name:'もち（もちのエネミー）', dept:['combat'], tags:['戦闘部','遊撃部隊'], rank:'スチール'},
+  {id:'0025', name:'テル・シャウト', dept:['combat'], tags:['戦闘部'], rank:'ブロンズ'},
+  {id:'0026', name:'枢宮 依月（異産コレクター）', dept:['combat'], tags:['戦闘部','遊撃部隊'], rank:'スチール'},
+  {id:'0027', name:'てぇんさいな科学者', dept:['combat'], tags:['戦闘部'], rank:'ブロンズ'},
+  {id:'0028', name:'大音量ギター', dept:['combat'], tags:['戦闘部'], rank:'ブロンズ'},
+  {id:'0029', name:'ハリス・ハンドリィ', dept:['combat'], tags:[], rank:'スチール'},
+  {id:'0030', name:'鳳凰院麗華', dept:['combat'], tags:['戦闘部'], rank:'シルバー'},
+  {id:'0031', name:'烏丸 与一', dept:['classified'], tags:[], rank:null},
+  {id:'0032', name:'天津那 白玖斗', dept:['classified'], tags:[], rank:null},
+  {id:'0033', name:'凍テ尽クレイ', dept:['classified'], tags:[], rank:null}
+];
+
+function cardHTML(emp, i){
+  var isClassified = emp.dept.indexOf('classified') !== -1;
+  var rankDot = emp.rank ? '<span class="emp-rank" style="background:' + (RANK_COLOR[emp.rank] || '#999') + '"></span>' : '<span class="emp-rank" style="background:var(--line-strong)"></span>';
+  var html = '<div class="emp-card' + (isClassified ? ' is-classified' : '') + '" data-dept="' + emp.dept.join(' ') + '" style="animation-delay:' + (Math.min(i,24) * 0.03) + 's">';
+  html += '<div class="emp-top"><span class="emp-id">FILE IB-' + emp.id + '</span>' + rankDot + '</div>';
+  if(isClassified){
+    html += '<div class="emp-name">' + emp.name + '</div>';
+    html += '<div class="redact"></div><div class="redact short"></div>';
+    html += '<div class="classified-label">INFORMATION CLASSIFIED</div>';
+  } else {
+    html += '<div class="emp-name">' + emp.name + '</div>';
+    html += '<div class="emp-tags">';
+    emp.tags.forEach(function(t){ html += '<span class="emp-tag">' + t + '</span>'; });
+    if(emp.rank){
+      html += '<span class="emp-tag rank-tag" style="background:' + (RANK_COLOR[emp.rank] || '#999') + '">' + emp.rank + '</span>';
+    }
+    html += '</div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+var grid = document.getElementById('roster-grid');
+grid.innerHTML = EMPLOYEES.map(cardHTML).join('');
+
+var buttons = document.querySelectorAll('.filter-btn');
+buttons.forEach(function(btn){
+  btn.addEventListener('click', function(){
+    buttons.forEach(function(b){ b.classList.remove('is-active'); });
+    btn.classList.add('is-active');
+    var f = btn.getAttribute('data-filter');
+    document.querySelectorAll('.emp-card').forEach(function(card){
+      var depts = card.getAttribute('data-dept').split(' ');
+      card.style.display = (f === 'all' || depts.indexOf(f) !== -1) ? '' : 'none';
+    });
+  });
+});
+</script>
+</body>
+</html>

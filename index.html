@@ -114,6 +114,49 @@
   }
   .eyebrow b{ color:var(--gold); font-weight:600; }
 
+  /* ===== Intro / Access Sequence ===== */
+  #intro{
+    position:fixed; inset:0; z-index:1000;
+    background:#0A1531;
+    display:flex; align-items:center; justify-content:center;
+    transition: opacity 0.6s ease, visibility 0.6s ease;
+  }
+  #intro.is-hidden{ opacity:0; visibility:hidden; pointer-events:none; }
+  #intro-inner{ width:280px; text-align:center; }
+  #intro-mark{
+    font-family: var(--font-display); font-weight:800;
+    font-size:22px; color:#fff; letter-spacing:0.04em;
+    opacity:0; animation: introFade 0.6s ease forwards 0.15s;
+  }
+  #intro-sub{
+    margin-top:8px;
+    font-family: var(--font-data); font-size:10px; letter-spacing:0.24em;
+    color: rgba(255,255,255,0.45);
+    opacity:0; animation: introFade 0.6s ease forwards 0.35s;
+  }
+  #intro-bar{
+    margin-top:28px; height:2px; width:100%;
+    background: rgba(255,255,255,0.14);
+    overflow:hidden;
+  }
+  #intro-bar span{
+    display:block; height:100%; width:0%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-bright));
+    animation: introBar 1.6s cubic-bezier(.3,.6,.3,1) forwards 0.4s;
+  }
+  #intro-log{
+    margin-top:16px; min-height:16px;
+    font-family: var(--font-data); font-size:10px; letter-spacing:0.1em;
+    color: rgba(255,255,255,0.5);
+  }
+  @keyframes introFade{ to{ opacity:1; } }
+  @keyframes introBar{ to{ width:100%; } }
+  @media (prefers-reduced-motion: reduce){
+    #intro{ transition:none; }
+    #intro-mark, #intro-sub{ animation:none; opacity:1; }
+    #intro-bar span{ animation:none; width:100%; }
+  }
+
   /* ===== Ticker ===== */
   .ticker{
     margin-top:72px;
@@ -622,6 +665,7 @@
   .division-strip div{ background: var(--bg-panel-alt); padding:22px 26px; }
   .division-strip h4{ font-size:14.5px; font-family:var(--font-body); font-weight:700; }
   .division-strip p{ font-size:13px; color:var(--text-muted); margin:8px 0 0; }
+  .business-cta{ margin-top:36px; text-align:center; }
 
   /* equipment — hover invert */
   .eq-grid{ display:grid; grid-template-columns: repeat(2, 1fr); gap:2px; background:var(--line); border:1px solid var(--line); }
@@ -732,6 +776,54 @@
 </style>
 </head>
 <body>
+
+<div id="intro" role="status" aria-label="読み込み中">
+  <div id="intro-inner">
+    <div id="intro-mark">INFINITY BRAVE</div>
+    <div id="intro-sub">SECURE ACCESS SEQUENCE</div>
+    <div id="intro-bar"><span></span></div>
+    <div id="intro-log"></div>
+  </div>
+</div>
+<script>
+(function(){
+  var intro = document.getElementById('intro');
+  var log = document.getElementById('intro-log');
+  if(!intro) return;
+
+  var seen = false;
+  try{ seen = sessionStorage.getItem('ib_intro_seen') === '1'; }catch(e){}
+  if(seen){
+    intro.remove();
+    return;
+  }
+  try{ sessionStorage.setItem('ib_intro_seen', '1'); }catch(e){}
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var lines = ['認証中 ...', 'ACCESS GRANTED'];
+  var html = document.documentElement;
+  html.style.overflow = 'hidden';
+
+  function hide(){
+    intro.classList.add('is-hidden');
+    html.style.overflow = '';
+    setTimeout(function(){ intro.remove(); }, 650);
+  }
+
+  if(reduced){
+    hide();
+    return;
+  }
+
+  lines.forEach(function(text, i){
+    setTimeout(function(){
+      if(log) log.textContent = text;
+    }, 550 + i * 550);
+  });
+
+  setTimeout(hide, 2200);
+})();
+</script>
 
 <header>
   <div class="wrap nav">
@@ -1139,6 +1231,9 @@
           <h4>役職について</h4>
           <p>年功序列と実力を両輪とする役職制度。部長・副部長・隊長・副隊長の各役職が現場と経営の橋渡しを行います。</p>
         </div>
+      </div>
+      <div class="business-cta">
+        <a href="roster.html" class="btn btn-ghost"><span>社員名簿を見る</span></a>
       </div>
     </div>
   </section>
