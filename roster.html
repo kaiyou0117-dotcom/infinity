@@ -187,7 +187,7 @@
 
       <div class="roster-meta">
         <div><b>32</b>名 登録</div>
-        <div><b>13</b>名 情報非公開</div>
+        <div><b>12</b>名 情報非公開</div>
         <div><b>5</b>階級 スチール〜プラチナ</div>
       </div>
     </div>
@@ -208,16 +208,20 @@
 
 <script>
 var RANK_COLOR = {
-  'プラチナ': 'linear-gradient(135deg,#E3B24A,#B4872C)',
+  'プラチナ': 'linear-gradient(135deg,#FFFFFF,#DCE1E8 55%,#AEB6C2)',
   'ゴールド': 'linear-gradient(135deg,#F4D06F,#C98A2E)',
-  'シルバー': '#C7CCD6',
+  'シルバー': '#AEB6C2',
   'ブロンズ': '#B97A46',
-  'スチール': '#9BA4B5',
+  'スチール': '#7C8492',
   '代表': 'linear-gradient(135deg,#E3B24A,#B4872C)'
+};
+var RANK_TEXT = {
+  'プラチナ': '#16233F',
+  'シルバー': '#16233F'
 };
 
 var EMPLOYEES = [
-  {id:'0002', name:'キキーモラ', dept:['mgmt'], tags:['経営陣','代表取締役社長'], rank:'代表'},
+  {id:'0002', name:'キキーモラ', dept:['mgmt'], tags:['経営陣','代表取締役社長'], rank:'代表', noDot:true},
   {id:'0003', name:'松之助', dept:['combat','mgmt'], tags:['戦闘部・経営部','突撃部隊'], rank:'プラチナ'},
   {id:'0004', name:'ソウマ（妖狐のエネミー）', dept:['combat'], tags:['戦闘部','遊撃・隠密部隊'], rank:'ゴールド'},
   {id:'0005', name:'ホワイトハッカー', dept:['combat','tech'], tags:['技術部・戦闘部','射撃部隊'], rank:'ゴールド'},
@@ -248,12 +252,15 @@ var EMPLOYEES = [
   {id:'0030', name:'鳳凰院麗華', dept:['combat'], tags:['戦闘部'], rank:'シルバー'},
   {id:'0031', name:'烏丸 与一', dept:['classified'], tags:[], rank:null},
   {id:'0032', name:'天津那 白玖斗', dept:['classified'], tags:[], rank:null},
-  {id:'0033', name:'凍テ尽クレイ', dept:['classified'], tags:[], rank:null}
+  {id:'0033', name:'凍テ尽クレイ', dept:['combat'], tags:[], rank:'ブロンズ'}
 ];
 
 function cardHTML(emp, i){
   var isClassified = emp.dept.indexOf('classified') !== -1;
-  var rankDot = emp.rank ? '<span class="emp-rank" style="background:' + (RANK_COLOR[emp.rank] || '#999') + '"></span>' : '<span class="emp-rank" style="background:var(--line-strong)"></span>';
+  var rankDot = '';
+  if(!emp.noDot){
+    rankDot = emp.rank ? '<span class="emp-rank" style="background:' + (RANK_COLOR[emp.rank] || '#999') + '"></span>' : '<span class="emp-rank" style="background:var(--line-strong)"></span>';
+  }
   var html = '<div class="emp-card' + (isClassified ? ' is-classified' : '') + '" data-dept="' + emp.dept.join(' ') + '" style="animation-delay:' + (Math.min(i,24) * 0.03) + 's">';
   html += '<div class="emp-top"><span class="emp-id">FILE IB-' + emp.id + '</span>' + rankDot + '</div>';
   if(isClassified){
@@ -265,7 +272,7 @@ function cardHTML(emp, i){
     html += '<div class="emp-tags">';
     emp.tags.forEach(function(t){ html += '<span class="emp-tag">' + t + '</span>'; });
     if(emp.rank){
-      html += '<span class="emp-tag rank-tag" style="background:' + (RANK_COLOR[emp.rank] || '#999') + '">' + emp.rank + '</span>';
+      html += '<span class="emp-tag rank-tag" style="background:' + (RANK_COLOR[emp.rank] || '#999') + ';color:' + (RANK_TEXT[emp.rank] || '#fff') + '">' + emp.rank + '</span>';
     }
     html += '</div>';
   }
